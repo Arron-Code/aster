@@ -1,0 +1,412 @@
+@import url("./alternative.css");
+
+:root {
+  --espresso: #142219;
+  --roast: #213b2a;
+  --caramel: #6d8b58;
+  --apricot: #b8d97c;
+  --milk: #eee9d9;
+  --foam: #f8f5e9;
+  --sage: #cbd8b7;
+  --olive: #3e5838;
+  --moss: #547149;
+  --leaf: #78986a;
+  --sun: #dceca8;
+  --paper: #f4f0e3;
+  --line: rgba(32, 61, 42, 0.18);
+}
+
+body {
+  background:
+    linear-gradient(rgba(33, 59, 42, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(33, 59, 42, 0.025) 1px, transparent 1px),
+    radial-gradient(circle at 82% 5%, rgba(184, 217, 124, 0.32), transparent 24rem),
+    linear-gradient(180deg, #f8f5e9, #ebe7d8);
+  background-size: 22px 22px, 22px 22px, auto, auto;
+}
+
+body::before {
+  width: 32rem;
+  height: 42rem;
+  right: -18rem;
+  border-color: rgba(62, 88, 56, 0.18);
+  border-radius: 100% 0 100% 0;
+  transform: rotate(-18deg);
+}
+
+.site-header {
+  border-color: rgba(69, 100, 62, 0.14);
+  background: rgba(248, 245, 233, 0.84);
+  box-shadow: 0 12px 42px rgba(28, 52, 35, 0.09);
+}
+
+.brand-mark {
+  border-radius: 50% 8% 50% 50%;
+  background: var(--roast);
+  color: var(--sun);
+  transform: rotate(-35deg);
+}
+
+.brand-mark::after {
+  height: 82%;
+  background: rgba(220, 236, 168, 0.4);
+  transform: rotate(35deg);
+}
+
+.brand-mark {
+  text-indent: -999px;
+}
+
+.brand-mark::before {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  content: "";
+  border-bottom: 1px solid var(--sun);
+  border-left: 1px solid var(--sun);
+  border-radius: 0 0 0 100%;
+  transform: rotate(35deg);
+}
+
+.brand small {
+  color: var(--moss);
+}
+
+.main-nav a {
+  color: var(--olive);
+}
+
+.main-nav a:last-child,
+.nav-toggle {
+  background: var(--roast);
+  color: var(--foam);
+}
+
+.main-nav a:hover {
+  background: rgba(120, 152, 106, 0.14);
+  color: var(--roast);
+}
+
+.hero {
+  grid-template-columns: minmax(0, 1.05fr) minmax(20rem, 0.95fr);
+}
+
+.hero::before {
+  width: min(52vw, 40rem);
+  aspect-ratio: 1;
+  left: -24vw;
+  bottom: -8rem;
+  border: 1px solid rgba(84, 113, 73, 0.16);
+  border-radius: 50% 8% 50% 50%;
+  background: rgba(203, 216, 183, 0.38);
+  transform: rotate(-25deg);
+}
+
+.eyebrow {
+  color: var(--moss);
+}
+
+.eyebrow::before {
+  width: 1.4rem;
+  height: 1.4rem;
+  border: 1px solid currentColor;
+  border-radius: 50% 0 50% 50%;
+  background: transparent;
+  transform: rotate(-35deg);
+}
+
+h1::first-line {
+  color: var(--roast);
+}
+
+.hero-lead,
+.section-heading > p,
+.contact-section > div > p,
+.proof-card > p {
+  color: #58675a;
+}
+
+.button.primary {
+  background: var(--roast);
+  box-shadow: 0 14px 30px rgba(33, 59, 42, 0.2);
+}
+
+.button.secondary,
+.chip {
+  border-color: rgba(62, 88, 56, 0.2);
+  background: rgba(248, 245, 233, 0.76);
+  color: var(--olive);
+}
+
+.chip.active {
+  border-color: var(--leaf);
+  background: var(--sun);
+  color: var(--roast);
+}
+
+.hero-metrics div {
+  border-color: rgba(62, 88, 56, 0.22);
+}
+
+.hero-metrics dt {
+  color: var(--roast);
+}
+
+.hero-metrics dd {
+  color: #687767;
+}
+
+.hero-card {
+  overflow: hidden;
+  border: 1px solid rgba(248, 245, 233, 0.48);
+  border-radius: 50% 8% 50% 50%;
+  background:
+    radial-gradient(circle at 31% 18%, rgba(220, 236, 168, 0.7) 0 8%, transparent 8.3%),
+    linear-gradient(145deg, #93aa76 0 20%, #547149 52%, #223c2a);
+  box-shadow:
+    0 45px 90px rgba(33, 59, 42, 0.26),
+    inset 15px 14px 34px rgba(220, 236, 168, 0.16);
+  transform: rotate(3deg);
+}
+
+.hero-card::before {
+  inset: 7% 49% -10% 47%;
+  border-radius: 50%;
+  background: rgba(20, 34, 25, 0.34);
+  box-shadow: none;
+  transform: rotate(-23deg);
+}
+
+.hero-card::after {
+  z-index: 1;
+  width: 12rem;
+  right: -3rem;
+  bottom: -2rem;
+  border-radius: 50% 0 50% 50%;
+  background: var(--sun);
+  opacity: 0.9;
+  transform: rotate(22deg);
+}
+
+.hero-card-content {
+  right: 1rem;
+  bottom: 1.5rem;
+  left: 2rem;
+  border-color: rgba(248, 245, 233, 0.64);
+  border-radius: 1.5rem 4rem 1.5rem 1.5rem;
+  background: rgba(248, 245, 233, 0.9);
+  box-shadow: 0 20px 50px rgba(20, 34, 25, 0.16);
+  transform: rotate(-3deg);
+}
+
+.hero-card-content p {
+  color: var(--moss);
+}
+
+.hero-card-content ul {
+  color: #58675a;
+}
+
+.hero-card-content li::before {
+  color: var(--leaf);
+}
+
+.roast-orbit span {
+  border-color: rgba(248, 245, 233, 0.3);
+}
+
+.roast-orbit span:nth-child(1) {
+  border-radius: 50% 0 50% 50%;
+  transform: rotate(22deg);
+}
+
+.roast-orbit span:nth-child(2) {
+  border-radius: 50% 0 50% 50%;
+  background: var(--sun);
+  transform: rotate(-18deg);
+}
+
+.roast-orbit span:nth-child(3) {
+  background: var(--foam);
+}
+
+.trust-strip {
+  border-color: var(--line);
+  background: var(--roast);
+}
+
+.trust-strip span {
+  color: var(--foam);
+}
+
+.trust-strip span::after {
+  content: "✦";
+  color: var(--sun);
+}
+
+.model-grid article {
+  border-color: var(--line);
+}
+
+.model-grid span {
+  border-radius: 50% 5% 50% 50%;
+  background: var(--leaf);
+  color: var(--foam);
+  transform: rotate(-25deg);
+}
+
+.model-grid h3,
+.coffee-card h3,
+.coffee-footer strong {
+  color: var(--roast);
+}
+
+.model-grid p,
+.coffee-card p,
+.coffee-meta,
+.form-status {
+  color: #607060;
+}
+
+.coffee-card {
+  border-color: rgba(248, 245, 233, 0.8);
+  border-radius: 10rem 10rem 1.5rem 1.5rem;
+  background:
+    linear-gradient(rgba(248, 245, 233, 0.82), rgba(248, 245, 233, 0.82)),
+    repeating-linear-gradient(0deg, transparent 0 4px, rgba(62, 88, 56, 0.05) 4px 5px);
+  box-shadow: 0 18px 60px rgba(33, 59, 42, 0.08);
+}
+
+.coffee-card:hover {
+  box-shadow: 0 28px 70px rgba(33, 59, 42, 0.15);
+}
+
+.coffee-visual {
+  border-radius: 50% 5% 50% 50%;
+  filter: saturate(0.7) sepia(0.06);
+  transform: scale(0.82) rotate(-20deg);
+}
+
+.coffee-visual::before {
+  width: 52%;
+  height: 68%;
+  left: 24%;
+  border-radius: 50% 8% 50% 50%;
+  background: linear-gradient(145deg, #9cae7e, #3f6445);
+  box-shadow: 12px 16px 28px rgba(24, 49, 31, 0.22);
+  transform: rotate(18deg);
+}
+
+.coffee-visual::after {
+  background: rgba(236, 240, 211, 0.5);
+  transform: rotate(27deg);
+}
+
+.coffee-meta span {
+  border-color: rgba(62, 88, 56, 0.17);
+  background: rgba(203, 216, 183, 0.26);
+}
+
+.impact-section {
+  background:
+    radial-gradient(circle at 89% 18%, rgba(184, 217, 124, 0.86) 0 6rem, transparent 6.1rem),
+    linear-gradient(145deg, #1c3424, #2f5034);
+}
+
+.impact-section .eyebrow {
+  color: var(--sun);
+}
+
+.impact-copy > p {
+  color: rgba(248, 245, 233, 0.66);
+}
+
+.impact-card,
+.contact-form {
+  border-color: rgba(248, 245, 233, 0.62);
+  background: rgba(248, 245, 233, 0.92);
+  box-shadow: 0 26px 70px rgba(20, 34, 25, 0.25);
+}
+
+label {
+  color: var(--olive);
+}
+
+input,
+select,
+textarea {
+  border-color: rgba(62, 88, 56, 0.18);
+  background: rgba(248, 245, 233, 0.86);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--leaf);
+  box-shadow: 0 0 0 4px rgba(120, 152, 106, 0.18);
+}
+
+input[type="range"] {
+  accent-color: var(--moss);
+}
+
+.impact-result {
+  border-radius: 50% 1.5rem 1.5rem 1.5rem;
+  background: var(--sun);
+}
+
+.impact-result span,
+.impact-result p {
+  color: var(--olive);
+}
+
+.proof-card.dark {
+  border-radius: 50% 2rem 2rem;
+  background:
+    radial-gradient(circle at 25% 20%, rgba(220, 236, 168, 0.86) 0 5rem, transparent 5.1rem),
+    linear-gradient(145deg, #426040, #1f3827);
+}
+
+.proof-card.light {
+  position: relative;
+  overflow: hidden;
+  background: var(--sage);
+}
+
+.proof-card.light::after {
+  position: absolute;
+  width: 15rem;
+  height: 21rem;
+  right: -6rem;
+  bottom: -9rem;
+  content: "";
+  border: 1px solid rgba(62, 88, 56, 0.28);
+  border-radius: 50% 0 50% 50%;
+  transform: rotate(18deg);
+}
+
+.proof-card.light .eyebrow {
+  color: var(--moss);
+}
+
+.site-footer {
+  background:
+    radial-gradient(circle at 75% 120%, rgba(120, 152, 106, 0.35), transparent 22rem),
+    var(--espresso);
+}
+
+.site-footer::after {
+  border-color: rgba(220, 236, 168, 0.35);
+  border-radius: 50% 0 50% 50%;
+}
+
+.site-footer a {
+  color: var(--sun);
+}
+
+@media (max-width: 900px) {
+  .main-nav {
+    border-color: rgba(62, 88, 56, 0.16);
+    background: rgba(248, 245, 233, 0.97);
+  }
+}
