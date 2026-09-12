@@ -15,12 +15,111 @@
   --page-accent: var(--aster-ink);
 }
 
+.aster-theme-classic {
+  --aster-ink: #1c1510;
+  --aster-ink-soft: #7a3f25;
+  --aster-green: #c9953c;
+  --aster-green-dark: #7a3f25;
+  --aster-cream: #fbf4e8;
+  --aster-paper: #fffdf8;
+  --aster-stone: #6f6258;
+  --aster-line: rgba(122, 63, 37, 0.14);
+}
+
+.aster-theme-creamy {
+  --aster-ink: #23120d;
+  --aster-ink-soft: #552b1d;
+  --aster-green: #f0a46b;
+  --aster-green-dark: #bd6f3c;
+  --aster-cream: #f7eddd;
+  --aster-paper: #fffaf1;
+  --aster-stone: #715b4f;
+  --aster-line: rgba(67, 35, 24, 0.16);
+}
+
+.aster-theme-sustainable {
+  --aster-ink: #142219;
+  --aster-ink-soft: #213b2a;
+  --aster-green: #b8d97c;
+  --aster-green-dark: #547149;
+  --aster-cream: #eee9d9;
+  --aster-paper: #f8f5e9;
+  --aster-stone: #58675a;
+  --aster-line: rgba(32, 61, 42, 0.18);
+}
+
+.aster-theme-logo {
+  --aster-ink: #18212d;
+  --aster-ink-soft: #2b3744;
+  --aster-green: #61d000;
+  --aster-green-dark: #478f12;
+  --aster-cream: #faf7ef;
+  --aster-paper: #fffdf8;
+  --aster-stone: #77746d;
+  --aster-line: rgba(24, 33, 45, 0.12);
+}
+
 body {
   color: var(--aster-ink);
   font-family: "DM Sans", sans-serif;
   background:
     radial-gradient(circle at 86% 5%, rgba(97, 208, 0, 0.16), transparent 24rem),
     linear-gradient(180deg, #fbf8f0, #ebe7dd);
+}
+
+body.aster-theme-classic,
+.home-page.aster-theme-classic {
+  background:
+    radial-gradient(circle at top left, rgba(201, 149, 60, 0.2), transparent 34rem),
+    linear-gradient(180deg, #fff8ed, #f8ecdc 50%, #fffdf8) !important;
+}
+
+body.aster-theme-creamy,
+.home-page.aster-theme-creamy {
+  background:
+    radial-gradient(circle at 80% 4%, rgba(240, 164, 107, 0.34), transparent 25rem),
+    linear-gradient(180deg, #fffaf1, #f7eddd) !important;
+}
+
+body.aster-theme-sustainable,
+.home-page.aster-theme-sustainable {
+  background:
+    linear-gradient(rgba(33, 59, 42, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(33, 59, 42, 0.025) 1px, transparent 1px),
+    radial-gradient(circle at 82% 5%, rgba(184, 217, 124, 0.32), transparent 24rem),
+    linear-gradient(180deg, #f8f5e9, #ebe7d8) !important;
+  background-size: 22px 22px, 22px 22px, auto, auto !important;
+}
+
+body.aster-theme-logo,
+.home-page.aster-theme-logo {
+  background:
+    radial-gradient(circle at 86% 5%, rgba(97, 208, 0, 0.16), transparent 24rem),
+    linear-gradient(180deg, #fbf8f0, #ebe7dd) !important;
+}
+
+.home-page.aster-theme-creamy .brand-mark-logo-btn,
+.home-page.aster-theme-creamy .card,
+.home-page.aster-theme-creamy .info-block {
+  border-radius: 32px 18px 32px 18px;
+}
+
+.home-page.aster-theme-sustainable .brand-mark-logo-btn,
+.home-page.aster-theme-sustainable .card,
+.home-page.aster-theme-sustainable .info-block {
+  border-radius: 34px 8px 34px 34px;
+}
+
+.home-page.aster-theme-classic .product-card::before {
+  background: linear-gradient(90deg, #243d2f, #c9953c, #7a3f25);
+}
+
+.home-page.aster-theme-creamy .product-card::before {
+  background: linear-gradient(90deg, #552b1d, #bd6f3c, #f0a46b);
+}
+
+.home-page.aster-theme-sustainable .product-card::before {
+  background: linear-gradient(90deg, #213b2a, #78986a, #b8d97c);
 }
 
 h1,

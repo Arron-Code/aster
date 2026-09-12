@@ -2,31 +2,42 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+import { DEFAULT_FRONTPAGE_VERSION, isFrontpageVersionId } from "@/lib/frontpage-versions";
 
-// Applies the shared page theme (brand-mark-bg background + Asteros-style
-// cards/buttons, or the Premium logo-driven theme) to every page except the
-// frontpage variants themselves, which already ship their own bespoke
-// header/background treatment.
 const EXCLUDED_PATHS = ["/", "/frontpage-asteros", "/frontpage-premium", "/frontpage-premium-invers"];
-const EXCLUDED_PREFIXES = ["/backoffice"];
-const PREMIUM_PATHS = ["/order-premium", "/reserve-premium", "/events-premium", "/menu-choice-premium", "/pay-premium"];
+const THEME_CLASSES = ["aster-theme-classic", "aster-theme-creamy", "aster-theme-sustainable", "aster-theme-logo"];
 
 export default function BodyThemeClass() {
   const pathname = usePathname();
-  const isExcluded = EXCLUDED_PATHS.includes(pathname) || EXCLUDED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
+  const isFrontpage = EXCLUDED_PATHS.includes(pathname) || pathname.startsWith("/frontpage/");
 
   useEffect(() => {
-    const isPremium = PREMIUM_PATHS.includes(pathname);
-    document.body.classList.toggle("zema-page-theme", !isExcluded && !isPremium);
-    document.body.classList.toggle("zema-page-theme-premium", !isExcluded && isPremium);
+    let active = true;
+
+    async function applyTheme() {
+      let theme = DEFAULT_FRONTPAGE_VERSION;
+      try {
+        const response = await fetch("/api/settings/frontpage-version", { cache: "no-store" });
+        if (!response.ok) throw new Error(`Theme request failed with ${response.status}`);
+        const data = (await response.json()) as { version?: string };
+        if (data.version && isFrontpageVersionId(data.version)) theme = data.version;
+      } catch (error) {
+        console.error("Aster theme could not be loaded.", error);
+      }
+
+      if (!active) return;
+      document.body.classList.remove(...THEME_CLASSES, "zema-page-theme", "zema-page-theme-premium");
+      document.body.classList.add(`aster-theme-${theme}`);
+    }
+
+    void applyTheme();
     return () => {
-      document.body.classList.remove("zema-page-theme");
-      document.body.classList.remove("zema-page-theme-premium");
+      active = false;
+      document.body.classList.remove(...THEME_CLASSES);
     };
-  }, [pathname, isExcluded]);
+  }, [pathname]);
 
-  if (isExcluded) return null;
+  if (isFrontpage) return null;
 
-  // Shows the brand mark texture top-left on every non-frontpage page.
   return <div className="page-brand-mark-corner" aria-hidden="true" />;
 }

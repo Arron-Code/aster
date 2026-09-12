@@ -28,7 +28,7 @@ export default async function FrontpagePremiumInvers() {
 
   return (
     <HomeClientPremium
-      invert
+      theme="creamy"
       initialDrinkItems={items.filter((item) => item.category === "DRINK" || item.category === "COFFEE").map(mapItem)}
       initialFoodItems={items.filter((item) => item.category === "FOOD").map(mapItem)}
       initialIsAdminUser={isAdminUser}

@@ -1,9 +1,9 @@
 // Zentrale Liste der verfügbaren Frontpage-Design-Versionen. Neue Versionen
 // hier eintragen, damit sie automatisch im Admin-Dropdown und beim Rendern
 // der Startseite berücksichtigt werden.
-export type FrontpageVersionId = "standard" | "asteros" | "premium" | "premium-invers";
+export type FrontpageVersionId = "classic" | "creamy" | "sustainable" | "logo";
 
-export const DEFAULT_FRONTPAGE_VERSION: FrontpageVersionId = "premium";
+export const DEFAULT_FRONTPAGE_VERSION: FrontpageVersionId = "logo";
 
 export type FrontpageVersion = {
   id: FrontpageVersionId;
@@ -14,32 +14,28 @@ export type FrontpageVersion = {
 
 export const FRONTPAGE_VERSIONS: FrontpageVersion[] = [
   {
-    id: "standard",
+    id: "classic",
     version: "v1.0",
-    label: "Standard-Design",
-    description:
-      "Übernommenes Basisdesign mit abgerundeten Buttons, Menü-Tabs mit Scrollspy und Kaffee-Tab.",
+    label: "Aster Classic",
+    description: "Warme Creme-, Gold-, Terrakotta- und Waldtöne aus dem klassischen Aster-Caffe-Design.",
   },
   {
-    id: "asteros",
+    id: "creamy",
     version: "v2.0",
-    label: "Asteros-Coffee-Design",
-    description:
-      "Alternative Aster-Variante mit warmen Naturtönen, serifenbetonten Überschriften und Hintergrund-Slideshow.",
+    label: "Aster Creamy",
+    description: "Weiche Milch-, Aprikosen- und Espressofarben mit organischen Formen.",
   },
   {
-    id: "premium",
+    id: "sustainable",
     version: "v3.0",
-    label: "Aster Premium",
-    description:
-      "Freigegebenes Aster-Design mit Cremeflächen, dunklem Ink-Ton, frischem Grün und eleganter Serifentypografie.",
+    label: "Aster Sustainable",
+    description: "Natürliches Grün, Salbei und Papierfarben mit nachhaltiger Anmutung.",
   },
   {
-    id: "premium-invers",
+    id: "logo",
     version: "v4.0",
-    label: "Aster Premium invers",
-    description:
-      "Invertierte Premium-Variante mit goldenen Flächen, dunkler Typografie und runden Header-Icons.",
+    label: "Aster Logo",
+    description: "Originales Astero-Logo mit Ink-Schwarz, leuchtendem Grün und eleganter Premium-Typografie.",
   },
 ];
 

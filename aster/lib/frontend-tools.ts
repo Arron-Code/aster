@@ -134,9 +134,9 @@ export async function fetchActiveFrontpageVersion(): Promise<string> {
     const response = await fetch("/api/settings/frontpage-version", { cache: "no-store" });
     if (!response.ok) throw new Error("request failed");
     const data = (await response.json()) as { version?: string };
-    return data.version || "standard";
+    return data.version || "logo";
   } catch {
-    return "standard";
+    return "logo";
   }
 }
 

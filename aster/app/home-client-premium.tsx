@@ -3,6 +3,7 @@
 import { formatPrice } from "@/lib/format";
 import { useEffect, useRef, useState } from "react";
 import type { Permission } from "@/lib/user-roles";
+import type { FrontpageVersionId } from "@/lib/frontpage-versions";
 
 type DbMenuItem = {
   id: string;
@@ -272,7 +273,7 @@ type HomeClientProps = {
   initialDrinkItems: DbMenuItem[];
   initialFoodItems: DbMenuItem[];
   initialIsAdminUser: boolean;
-  invert?: boolean;
+  theme?: FrontpageVersionId;
 };
 
 const adminNavigation: { permission: Permission; href: string; label: string }[] = [
@@ -291,7 +292,7 @@ const adminNavigation: { permission: Permission; href: string; label: string }[]
   { permission: "personal", href: "/admin/personal", label: "Personal" },
 ];
 
-export default function HomeClientPremium({ initialDrinkItems, initialFoodItems, initialIsAdminUser, invert }: HomeClientProps) {
+export default function HomeClientPremium({ initialDrinkItems, initialFoodItems, initialIsAdminUser, theme = "logo" }: HomeClientProps) {
   const [language, setLanguage] = useState<Language>("de");
   const [drinkItems, setDrinkItems] = useState<DbMenuItem[]>(initialDrinkItems);
   const [foodItems, setFoodItems] = useState<DbMenuItem[]>(initialFoodItems);
@@ -540,7 +541,7 @@ export default function HomeClientPremium({ initialDrinkItems, initialFoodItems,
   };
 
   return (
-    <div className={`home-page ${invert ? "home-page-premium-invers" : "home-page-premium"}`} style={{ ...themeVars }}>
+    <div className={`home-page home-page-premium aster-theme-${theme}`} style={{ ...themeVars }}>
       <header className="site-header" ref={headerRef as any}>
         <div
           className="site-header-bg-slideshow site-header-bg-parallax"
@@ -610,15 +611,9 @@ export default function HomeClientPremium({ initialDrinkItems, initialFoodItems,
               aria-expanded={languageMenuOpen}
               onClick={() => setLanguageMenuOpen((open) => !open)}
             >
-              {invert ? (
-                <svg className="language-icon language-icon-small" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M12 2a10 10 0 1 0 10 10A10.01 10.01 0 0 0 12 2Zm6.92 6h-3.04a15.7 15.7 0 0 0-1.36-3.45A8.04 8.04 0 0 1 18.92 8ZM12 4c.83 1.2 1.43 2.55 1.76 4h-3.52c.33-1.45.93-2.8 1.76-4ZM4.26 14a7.82 7.82 0 0 1 0-4h3.22a16.58 16.58 0 0 0 0 4Zm.82 2h3.04a15.7 15.7 0 0 0 1.36 3.45A8.04 8.04 0 0 1 5.08 16Zm3.04-8H5.08a8.04 8.04 0 0 1 4.4-3.45A15.7 15.7 0 0 0 8.12 8ZM12 20c-.83-1.2-1.43-2.55-1.76-4h3.52c-.33 1.45-.93 2.8-1.76 4Zm2.24-6H9.76a14.67 14.67 0 0 1 0-4h4.48a14.67 14.67 0 0 1 0 4Zm.28 5.45A15.7 15.7 0 0 0 15.88 16h3.04a8.04 8.04 0 0 1-4.4 3.45ZM16.52 14a16.58 16.58 0 0 0 0-4h3.22a7.82 7.82 0 0 1 0 4Z" />
-                </svg>
-              ) : (
-                <span className="language-icon language-icon-small" aria-hidden="true">
-                  {languageOptions[language].flag}
-                </span>
-              )}
+              <span className="language-icon language-icon-small" aria-hidden="true">
+                {languageOptions[language].flag}
+              </span>
             </button>
 
             {languageMenuOpen && (

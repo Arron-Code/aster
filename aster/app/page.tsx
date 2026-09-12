@@ -2,8 +2,6 @@ import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { adminCookieName, validAdminToken } from "@/lib/admin-auth";
 import { DEFAULT_FRONTPAGE_VERSION, isFrontpageVersionId } from "@/lib/frontpage-versions";
-import HomeClient from "./home-client";
-import HomeClientAsteros from "./home-client-asteros";
 import HomeClientPremium from "./home-client-premium";
 
 // Rendered on the server so the menu and login state are already present
@@ -39,39 +37,9 @@ export default async function Home() {
   const initialDrinkItems = items.filter((item) => item.category === "DRINK" || item.category === "COFFEE").map(mapItem);
   const initialFoodItems = items.filter((item) => item.category === "FOOD").map(mapItem);
 
-  if (activeVersion === "asteros") {
-    return (
-      <HomeClientAsteros
-        initialDrinkItems={initialDrinkItems}
-        initialFoodItems={initialFoodItems}
-        initialIsAdminUser={isAdminUser}
-      />
-    );
-  }
-
-  if (activeVersion === "premium") {
-    return (
-      <HomeClientPremium
-        initialDrinkItems={initialDrinkItems}
-        initialFoodItems={initialFoodItems}
-        initialIsAdminUser={isAdminUser}
-      />
-    );
-  }
-
-  if (activeVersion === "premium-invers") {
-    return (
-      <HomeClientPremium
-        invert
-        initialDrinkItems={initialDrinkItems}
-        initialFoodItems={initialFoodItems}
-        initialIsAdminUser={isAdminUser}
-      />
-    );
-  }
-
   return (
-    <HomeClient
+    <HomeClientPremium
+      theme={activeVersion}
       initialDrinkItems={initialDrinkItems}
       initialFoodItems={initialFoodItems}
       initialIsAdminUser={isAdminUser}

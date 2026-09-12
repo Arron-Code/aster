@@ -1,12 +1,20 @@
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { adminCookieName, validAdminToken } from "@/lib/admin-auth";
-import HomeClientPremium from "../home-client-premium";
+import { isFrontpageVersionId } from "@/lib/frontpage-versions";
+import HomeClientPremium from "../../home-client-premium";
 
-// Alternative Startseite im Asteros-Coffee-Design zum direkten Vergleich mit der Standard-Frontpage.
 export const revalidate = 30;
 
-export default async function FrontpageAsteros() {
+export default async function AsterThemePreview({
+  params,
+}: {
+  params: Promise<{ theme: string }>;
+}) {
+  const { theme } = await params;
+  if (!isFrontpageVersionId(theme)) notFound();
+
   const [items, cookieStore] = await Promise.all([
     prisma.menuItem.findMany({
       where: { available: true, category: { in: ["DRINK", "COFFEE", "FOOD"] } },
@@ -16,7 +24,6 @@ export default async function FrontpageAsteros() {
   ]);
 
   const isAdminUser = validAdminToken(cookieStore.get(adminCookieName())?.value);
-
   const mapItem = (item: (typeof items)[number]) => ({
     id: item.id,
     name: item.name,
@@ -28,7 +35,7 @@ export default async function FrontpageAsteros() {
 
   return (
     <HomeClientPremium
-      theme="sustainable"
+      theme={theme}
       initialDrinkItems={items.filter((item) => item.category === "DRINK" || item.category === "COFFEE").map(mapItem)}
       initialFoodItems={items.filter((item) => item.category === "FOOD").map(mapItem)}
       initialIsAdminUser={isAdminUser}
