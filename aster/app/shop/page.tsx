@@ -34,6 +34,7 @@ export default async function ShopPage() {
   return (
     <HomeClientPremium
       theme={activeVersion}
+      headerFrameUrl="https://asterscoffee.com/ueber-uns/"
       initialDrinkItems={items.filter((item) => item.category === "DRINK" || item.category === "COFFEE").map(mapItem)}
       initialFoodItems={items.filter((item) => item.category === "FOOD").map(mapItem)}
       initialIsAdminUser={isAdminUser}

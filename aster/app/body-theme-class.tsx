@@ -5,7 +5,13 @@ import { useEffect } from "react";
 import { DEFAULT_FRONTPAGE_VERSION, isFrontpageVersionId } from "@/lib/frontpage-versions";
 
 const EXCLUDED_PATHS = ["/", "/frontpage-asteros", "/frontpage-premium", "/frontpage-premium-invers"];
-const THEME_CLASSES = ["aster-theme-classic", "aster-theme-creamy", "aster-theme-sustainable", "aster-theme-logo"];
+const THEME_CLASSES = [
+  "aster-theme-classic",
+  "aster-theme-creamy",
+  "aster-theme-sustainable",
+  "aster-theme-logo",
+  "aster-theme-wholesale",
+];
 
 export default function BodyThemeClass() {
   const pathname = usePathname();

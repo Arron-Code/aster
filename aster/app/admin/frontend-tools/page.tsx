@@ -781,6 +781,27 @@ export default function FrontEndToolsPage() {
                   {entry.id === frontpageVersion && <span className="frontpage-version-badge">Aktiv</span>}
                 </div>
                 <p className="muted">{entry.description}</p>
+                <div className="frontpage-version-actions">
+                  <a
+                    className="btn secondary"
+                    href={`/frontpage/${entry.id}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Vorschau öffnen
+                  </a>
+                  <button
+                    type="button"
+                    className="btn"
+                    disabled={entry.id === frontpageVersion || frontpageVersionSaving}
+                    onClick={() => {
+                      setFrontpageVersion(entry.id);
+                      void saveFrontpageVersionToServer(entry.id);
+                    }}
+                  >
+                    {entry.id === frontpageVersion ? "Aktiv" : "Aktivieren"}
+                  </button>
+                </div>
               </div>
             ))}
           </div>

@@ -561,3 +561,299 @@ body.zema-page-theme-premium .option-card {
     height: 42px;
   }
 }
+
+/* Wholesale header variant: light brand bar, compact service row and icon navigation. */
+body.aster-theme-wholesale,
+.home-page.aster-theme-wholesale {
+  --aster-ink: #30343a;
+  --aster-ink-soft: #555b62;
+  --aster-green: #a8cf36;
+  --aster-green-dark: #73951c;
+  --aster-cream: #f4f5ef;
+  --aster-paper: #ffffff;
+  --aster-stone: #6b7075;
+  --aster-line: rgba(48, 52, 58, 0.14);
+  background: linear-gradient(180deg, #f8f9f4, #eef0e8) !important;
+}
+
+.home-page.aster-theme-wholesale .site-header {
+  position: relative;
+  min-height: 510px;
+  border-top: 6px solid var(--aster-green);
+  border-bottom: 1px solid #dfe2e4;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(48, 52, 58, 0.08);
+}
+
+.home-page.aster-theme-wholesale .site-header-bg-slideshow {
+  top: 182px;
+  filter: saturate(0.8) contrast(1.03) brightness(0.88);
+}
+
+.home-page.aster-theme-wholesale .site-header-bg-slideshow::after {
+  background: linear-gradient(90deg, rgba(48, 52, 58, 0.76), rgba(48, 52, 58, 0.16) 68%);
+}
+
+.home-page.aster-theme-wholesale .header-bg-depth-frame {
+  box-shadow: inset 0 0 70px rgba(0, 0, 0, 0.22);
+}
+
+.wholesale-service-bar {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 30;
+  height: 32px;
+  border-bottom: 1px solid #e4e6e7;
+  background: #fbfbfa;
+  color: #62666a;
+  font-size: 0.72rem;
+}
+
+.wholesale-service-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.wholesale-service-bar nav {
+  display: flex;
+  align-self: stretch;
+}
+
+.wholesale-service-bar a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 14px;
+  border-left: 1px solid #e4e6e7;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.wholesale-service-bar a:last-child {
+  border-right: 1px solid #e4e6e7;
+}
+
+.wholesale-service-bar a:hover {
+  background: #fff;
+  color: var(--aster-green-dark);
+}
+
+.home-page.aster-theme-wholesale .header-brand-top-center {
+  top: 58px;
+  left: max(22px, calc((100% - 1250px) / 2 + 22px));
+  transform: none;
+  animation: none;
+  z-index: 25;
+}
+
+.home-page.aster-theme-wholesale .brand-mark-logo-btn {
+  width: 230px;
+  height: 82px;
+  padding: 4px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  animation: none;
+}
+
+.home-page.aster-theme-wholesale .brand-mark-logo-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+
+.home-page.aster-theme-wholesale .brand-mark-logo-img {
+  object-fit: contain;
+  border-radius: 0;
+}
+
+.home-page.aster-theme-wholesale .header-user-area-bottom-right {
+  top: 78px;
+  right: max(22px, calc((100% - 1250px) / 2 + 22px));
+  z-index: 25;
+}
+
+.home-page.aster-theme-wholesale .site-header .language-picker-button,
+.home-page.aster-theme-wholesale .site-header .user-profile-button-icon-only {
+  border: 1px solid #dfe2e4 !important;
+  background: #fff !important;
+  color: var(--aster-ink) !important;
+  box-shadow: none !important;
+}
+
+.home-page.aster-theme-wholesale .site-header .user-profile-button-icon-only svg {
+  fill: var(--aster-ink) !important;
+}
+
+.wholesale-main-navigation {
+  position: absolute;
+  top: 32px;
+  left: 50%;
+  z-index: 24;
+  width: min(1250px, 100%);
+  height: 150px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.home-page.aster-theme-wholesale .wholesale-main-navigation .site-nav {
+  position: absolute;
+  top: 50%;
+  left: 57%;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 28px;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+}
+
+.home-page.aster-theme-wholesale .wholesale-main-navigation .site-nav > a,
+.home-page.aster-theme-wholesale .wholesale-main-navigation .menu-nav-trigger {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 82px;
+  padding: 8px 10px;
+  border: 0 !important;
+  border-radius: 0;
+  background: transparent !important;
+  color: var(--aster-ink) !important;
+  box-shadow: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.home-page.aster-theme-wholesale .wholesale-main-navigation .menu-nav-trigger::before,
+.home-page.aster-theme-wholesale .wholesale-main-navigation .site-nav > a::before {
+  color: var(--aster-ink);
+  font-size: 1.12rem;
+  line-height: 1;
+}
+
+.home-page.aster-theme-wholesale .wholesale-main-navigation .menu-nav-trigger::before {
+  content: "☕";
+}
+
+.home-page.aster-theme-wholesale .wholesale-main-navigation .site-nav > a:nth-of-type(1)::before {
+  content: "▦";
+}
+
+.home-page.aster-theme-wholesale .wholesale-main-navigation .site-nav > a:nth-of-type(2)::before {
+  content: "✦";
+}
+
+.home-page.aster-theme-wholesale .wholesale-main-navigation .site-nav > a:hover,
+.home-page.aster-theme-wholesale .wholesale-main-navigation .menu-nav-trigger:hover {
+  color: var(--aster-green-dark) !important;
+  transform: translateY(-2px);
+}
+
+.home-page.aster-theme-wholesale .wholesale-main-navigation .site-nav > a:hover::before,
+.home-page.aster-theme-wholesale .wholesale-main-navigation .menu-nav-trigger:hover::before {
+  color: var(--aster-green);
+}
+
+.home-page.aster-theme-wholesale .wholesale-main-navigation .menu-nav-caret {
+  display: none;
+}
+
+.home-page.aster-theme-wholesale .wholesale-main-navigation .menu-nav-dropdown {
+  top: calc(100% + 8px);
+  border: 1px solid #dfe2e4;
+  border-radius: 0;
+  background: #fff;
+  box-shadow: 0 18px 38px rgba(48, 52, 58, 0.16);
+}
+
+.home-page.aster-theme-wholesale .hero-popup,
+.home-page.aster-theme-wholesale .header-auth-panel,
+.home-page.aster-theme-wholesale .language-menu {
+  border: 1px solid #dfe2e4;
+  border-radius: 0;
+  background: #fff;
+  box-shadow: 0 18px 38px rgba(48, 52, 58, 0.16);
+}
+
+.home-page.aster-theme-wholesale .product-card::before {
+  background: linear-gradient(90deg, var(--aster-green-dark), var(--aster-green));
+}
+
+@media (max-width: 900px) {
+  .home-page.aster-theme-wholesale .wholesale-main-navigation .site-nav {
+    left: 53%;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 760px) {
+  .home-page.aster-theme-wholesale .site-header {
+    min-height: 500px;
+  }
+
+  .wholesale-service-bar {
+    height: 82px;
+  }
+
+  .wholesale-service-bar-inner {
+    display: grid;
+    justify-items: center;
+    gap: 5px;
+    padding: 7px 0 0;
+  }
+
+  .wholesale-service-bar nav {
+    width: 100%;
+    justify-content: center;
+    border-top: 1px solid #e4e6e7;
+  }
+
+  .wholesale-service-bar a {
+    padding: 8px 12px;
+  }
+
+  .home-page.aster-theme-wholesale .header-brand-top-center {
+    top: 98px;
+    left: 16px;
+  }
+
+  .home-page.aster-theme-wholesale .brand-mark-logo-btn {
+    width: 150px;
+    height: 64px;
+  }
+
+  .home-page.aster-theme-wholesale .header-user-area-bottom-right {
+    top: 105px;
+    right: 16px;
+  }
+
+  .wholesale-main-navigation {
+    top: 166px;
+    height: 64px;
+    border-top: 1px solid #e4e6e7;
+    background: #fff;
+  }
+
+  .home-page.aster-theme-wholesale .wholesale-main-navigation .site-nav {
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .home-page.aster-theme-wholesale .wholesale-main-navigation .site-nav > a,
+  .home-page.aster-theme-wholesale .wholesale-main-navigation .menu-nav-trigger {
+    min-width: 76px;
+    padding: 6px 8px;
+    font-size: 0.72rem;
+  }
+
+  .home-page.aster-theme-wholesale .site-header-bg-slideshow {
+    top: 230px;
+  }
+}

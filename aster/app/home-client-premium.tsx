@@ -267,6 +267,7 @@ type HomeClientProps = {
   initialFoodItems: DbMenuItem[];
   initialIsAdminUser: boolean;
   theme?: FrontpageVersionId;
+  headerFrameUrl?: string;
 };
 
 const adminNavigation: { permission: Permission; href: string; label: string }[] = [
@@ -285,7 +286,13 @@ const adminNavigation: { permission: Permission; href: string; label: string }[]
   { permission: "personal", href: "/admin/personal", label: "Personal" },
 ];
 
-export default function HomeClientPremium({ initialDrinkItems, initialFoodItems, initialIsAdminUser, theme = "logo" }: HomeClientProps) {
+export default function HomeClientPremium({
+  initialDrinkItems,
+  initialFoodItems,
+  initialIsAdminUser,
+  theme = "logo",
+  headerFrameUrl,
+}: HomeClientProps) {
   const [language, setLanguage] = useState<Language>("de");
   const [drinkItems, setDrinkItems] = useState<DbMenuItem[]>(initialDrinkItems);
   const [foodItems, setFoodItems] = useState<DbMenuItem[]>(initialFoodItems);
@@ -532,24 +539,88 @@ export default function HomeClientPremium({ initialDrinkItems, initialFoodItems,
     setAuthOpen(false);
   };
 
+  const mainNavigation = (
+    <nav className="site-nav site-nav-center" aria-label="Main navigation">
+      <div className="menu-nav-dropdown-wrap">
+        <button
+          type="button"
+          className="menu-nav-trigger"
+          aria-haspopup="menu"
+          aria-expanded={menuDropdownOpen}
+          onClick={() => setMenuDropdownOpen((open) => !open)}
+        >
+          {t.menu}
+          <span className="menu-nav-caret" aria-hidden="true">▾</span>
+        </button>
+
+        {menuDropdownOpen && (
+          <div className="menu-nav-dropdown" role="menu" aria-label={t.menu}>
+            <a role="menuitem" href="/order-premium" onClick={() => setMenuDropdownOpen(false)}>
+              <span aria-hidden="true">🍽️</span> {t.menuOrderNow}
+            </a>
+            <a role="menuitem" href="/menu-choice-premium?mode=pickup" onClick={() => setMenuDropdownOpen(false)}>
+              <span aria-hidden="true">🏠</span> {t.menuPickup}
+            </a>
+            <a role="menuitem" href="/menu-choice-premium?mode=delivery" onClick={() => setMenuDropdownOpen(false)}>
+              <span aria-hidden="true">🚚</span> {t.menuDelivery}
+            </a>
+            <a role="menuitem" href="/reserve-premium" onClick={() => setMenuDropdownOpen(false)}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={{ color: "var(--brand-mark-icon)" }}>
+                <path d="M20 3H9v10.55A4 4 0 1 0 11 17V7h7v6.55A4 4 0 1 0 20 17V3z" />
+              </svg> {t.menuReserve}
+            </a>
+          </div>
+        )}
+      </div>
+      <a href="/reserve-premium">{t.navReserve}</a>
+      <a href="/events-premium">{t.navEvents}</a>
+    </nav>
+  );
+
   return (
     <div className={`home-page home-page-premium aster-theme-${theme}`} style={{ ...themeVars }}>
       <header className="site-header" ref={headerRef as any}>
+        {theme === "wholesale" && (
+          <div className="wholesale-service-bar">
+            <div className="wrap wholesale-service-bar-inner">
+              <span>Aster Caffe · Äthiopische Küche & Kaffee</span>
+              <nav aria-label="Service-Navigation">
+                <a href="#menu">Speisekarte</a>
+                <a href="/reserve-premium">Reservierung</a>
+                <a href="/events-premium">Events</a>
+              </nav>
+            </div>
+          </div>
+        )}
+
         <div
-          className="site-header-bg-slideshow site-header-bg-parallax"
-          aria-hidden="true"
+          className={`site-header-bg-slideshow site-header-bg-parallax${headerFrameUrl ? " header-content-frame-host" : ""}`}
+          aria-hidden={headerFrameUrl ? undefined : true}
           style={{
             ["--parallax-x" as any]: parallax.x,
             ["--parallax-y" as any]: parallax.y,
           }}
         >
-          <div
-            className="header-bg-slide header-bg-slide-back active"
-            style={{
-              backgroundImage: `linear-gradient(180deg, rgba(15,23,42,.28), rgba(15,23,42,.08) 45%, rgba(255,255,255,.85) 92%), url(${settings.headerBackgroundImage || defaultFrontendSettings.headerBackgroundImage})`,
-            }}
-          />
-          <div className="header-bg-depth-frame" />
+          {headerFrameUrl ? (
+            <iframe
+              className="header-content-frame"
+              src={headerFrameUrl}
+              title="Asters Coffee"
+              loading="eager"
+              referrerPolicy="strict-origin-when-cross-origin"
+              sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+            />
+          ) : (
+            <>
+              <div
+                className="header-bg-slide header-bg-slide-back active"
+                style={{
+                  backgroundImage: `linear-gradient(180deg, rgba(15,23,42,.28), rgba(15,23,42,.08) 45%, rgba(255,255,255,.85) 92%), url(${settings.headerBackgroundImage || defaultFrontendSettings.headerBackgroundImage})`,
+                }}
+              />
+              <div className="header-bg-depth-frame" />
+            </>
+          )}
         </div>
 
         <div className="brand-mark-float header-brand-top-center" ref={brandMarkRef}>
@@ -752,46 +823,16 @@ export default function HomeClientPremium({ initialDrinkItems, initialFoodItems,
             )}
           </div>
         </div>
+
+        {theme === "wholesale" && (
+          <div className="wrap wholesale-main-navigation">
+            {mainNavigation}
+          </div>
+        )}
       </header>
 
       <main className="wrap" id="menu">
-        <div className="wrap site-header-inner">
-          <nav className="site-nav site-nav-center" aria-label="Main navigation">
-            <div className="menu-nav-dropdown-wrap">
-              <button
-                type="button"
-                className="menu-nav-trigger"
-                aria-haspopup="menu"
-                aria-expanded={menuDropdownOpen}
-                onClick={() => setMenuDropdownOpen((open) => !open)}
-              >
-                {t.menu}
-                <span className="menu-nav-caret" aria-hidden="true">▾</span>
-              </button>
-
-              {menuDropdownOpen && (
-                <div className="menu-nav-dropdown" role="menu" aria-label={t.menu}>
-                  <a role="menuitem" href="/order-premium" onClick={() => setMenuDropdownOpen(false)}>
-                    <span aria-hidden="true">🍽️</span> {t.menuOrderNow}
-                  </a>
-                  <a role="menuitem" href="/menu-choice-premium?mode=pickup" onClick={() => setMenuDropdownOpen(false)}>
-                    <span aria-hidden="true">🏠</span> {t.menuPickup}
-                  </a>
-                  <a role="menuitem" href="/menu-choice-premium?mode=delivery" onClick={() => setMenuDropdownOpen(false)}>
-                    <span aria-hidden="true">🚚</span> {t.menuDelivery}
-                  </a>
-                  <a role="menuitem" href="/reserve-premium" onClick={() => setMenuDropdownOpen(false)}>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={{ color: "var(--brand-mark-icon)" }}>
-                      <path d="M20 3H9v10.55A4 4 0 1 0 11 17V7h7v6.55A4 4 0 1 0 20 17V3z" />
-                    </svg> {t.menuReserve}
-                  </a>
-                </div>
-              )}
-            </div>
-            <a href="/reserve-premium">{t.navReserve}</a>
-            <a href="/events-premium">{t.navEvents}</a>
-          </nav>
-        </div>
+        {theme !== "wholesale" && <div className="wrap site-header-inner">{mainNavigation}</div>}
 
         <div className="card product-catalog-panel">
           <section className="menu-category-section" id="menu-food">

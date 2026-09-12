@@ -1,7 +1,7 @@
 // Zentrale Liste der verfügbaren Frontpage-Design-Versionen. Neue Versionen
 // hier eintragen, damit sie automatisch im Admin-Dropdown und beim Rendern
 // der Startseite berücksichtigt werden.
-export type FrontpageVersionId = "classic" | "creamy" | "sustainable" | "logo";
+export type FrontpageVersionId = "classic" | "creamy" | "sustainable" | "logo" | "wholesale";
 
 export const DEFAULT_FRONTPAGE_VERSION: FrontpageVersionId = "logo";
 
@@ -36,6 +36,12 @@ export const FRONTPAGE_VERSIONS: FrontpageVersion[] = [
     version: "v4.0",
     label: "Aster Logo",
     description: "Originales Astero-Logo mit Ink-Schwarz, leuchtendem Grün und eleganter Premium-Typografie.",
+  },
+  {
+    id: "wholesale",
+    version: "v5.0",
+    label: "Aster Wholesale",
+    description: "Heller, zweistufiger Marken-Header mit grüner Akzentlinie und Icon-Navigation.",
   },
 ];
 
