@@ -262,14 +262,6 @@ const STORAGE_KEY = "aster-frontend-settings";
 const LANGUAGE_KEY = "aster-frontend-language";
 const AUTH_KEY = "aster-auth-user";
 
-const PUBLIC_HEADER_IMAGES = [
-  "/PHOTO-2026-08-31-16-03-18.jpg",
-  "/PHOTO-2026-08-31-16-03-29.jpg",
-  "/kamerafahrt.png",
-  "/PHOTO-2026-08-31-16-04-04.jpg",
-  "/PHOTO-2026-08-31-16-03-44.jpg",
-];
-
 type HomeClientProps = {
   initialDrinkItems: DbMenuItem[];
   initialFoodItems: DbMenuItem[];
@@ -308,7 +300,6 @@ export default function HomeClientPremium({ initialDrinkItems, initialFoodItems,
   const [isAdminUser, setIsAdminUser] = useState(initialIsAdminUser);
   const [staffPermissions, setStaffPermissions] = useState<Permission[]>([]);
   const [heroPopupOpen, setHeroPopupOpen] = useState(false);
-  const [currentBgIndex, setCurrentBgIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<string>("food");
   const brandMarkRef = useRef<HTMLDivElement | null>(null);
   const headerRef = useRef<HTMLElement | null>(null);
@@ -370,14 +361,6 @@ export default function HomeClientPremium({ initialDrinkItems, initialFoodItems,
     drinks: "🥤",
     home: "🎵",
   };
-
-  useEffect(() => {
-    if (PUBLIC_HEADER_IMAGES.length <= 1) return;
-    const timer = setInterval(() => {
-      setCurrentBgIndex((prev) => (prev + 1) % PUBLIC_HEADER_IMAGES.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
 
   useEffect(() => {
     const header = headerRef.current;
@@ -560,15 +543,12 @@ export default function HomeClientPremium({ initialDrinkItems, initialFoodItems,
             ["--parallax-y" as any]: parallax.y,
           }}
         >
-          {PUBLIC_HEADER_IMAGES.map((imgUrl, index) => (
-            <div
-              key={imgUrl}
-              className={`header-bg-slide header-bg-slide-back${index === currentBgIndex ? " active" : ""}`}
-              style={{
-                backgroundImage: `linear-gradient(180deg, rgba(15,23,42,.28), rgba(15,23,42,.08) 45%, rgba(255,255,255,.85) 92%), url(${imgUrl})`,
-              }}
-            />
-          ))}
+          <div
+            className="header-bg-slide header-bg-slide-back active"
+            style={{
+              backgroundImage: `linear-gradient(180deg, rgba(15,23,42,.28), rgba(15,23,42,.08) 45%, rgba(255,255,255,.85) 92%), url(${settings.headerBackgroundImage || defaultFrontendSettings.headerBackgroundImage})`,
+            }}
+          />
           <div className="header-bg-depth-frame" />
         </div>
 

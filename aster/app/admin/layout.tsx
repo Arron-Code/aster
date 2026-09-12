@@ -37,7 +37,7 @@ const adminMenu = [
   { key: "events", href: "/admin/events", label: "Events", description: "Veranstaltungen", permission: "tables", group: "Betrieb" },
   { key: "reservations", href: "/admin/reservations", label: "Reservierungen", description: "Tischanfragen", permission: "tables", group: "Betrieb" },
   { key: "menu", href: "/admin/menu", label: "Speisekarte", description: "Menüs & Preise", permission: "menu", group: "Sortiment" },
-  { key: "products", href: "/admin/products", label: "Produkte", description: "Katalog", permission: "products", group: "Sortiment" },
+  { key: "products", href: "/admin/products", label: "Produkte", description: "Katalog", permission: "products", group: "Produkte" },
   { key: "inventory", href: "/admin/inventory", label: "Lager", description: "Bestand", permission: "inventory", group: "Bestand" },
   { key: "recipes", href: "/admin/recipes", label: "Rezepturen", description: "Zutaten", permission: "recipes", group: "Bestand" },
   { key: "suppliers", href: "/admin/suppliers", label: "Lieferanten", description: "Partner", permission: "suppliers", group: "Bestand" },
