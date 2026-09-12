@@ -1,0 +1,4 @@
+import { NextRequest, NextResponse } from "next/server"; import { z } from "zod"; import { prisma } from "@/lib/prisma"; import { isAdmin, unauthorized } from "@/lib/admin-api";
+const schema = z.object({ name: z.string().trim().min(1).max(120), email: z.string().email().or(z.literal("")).optional(), phone: z.string().max(50).optional(), address: z.string().max(300).optional() });
+export async function GET(req: NextRequest) { if (!isAdmin(req)) return unauthorized(); return NextResponse.json(await prisma.supplier.findMany({ orderBy: { name: "asc" } })); }
+export async function POST(req: NextRequest) { if (!isAdmin(req)) return unauthorized(); try { const d = schema.parse(await req.json()); return NextResponse.json(await prisma.supplier.create({ data: { ...d, email: d.email || null } }), { status: 201 }); } catch { return NextResponse.json({ error: "Lieferant ungültig oder bereits vorhanden" }, { status: 400 }); } }

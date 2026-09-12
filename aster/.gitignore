@@ -1,0 +1,12 @@
+node_modules
+.next
+.env
+.env*
+.DS_Store
+*.tsbuildinfo
+.vscode/*
+!.vscode/extensions.json
+npm-debug.log*
+.neon
+
+public/*.zip

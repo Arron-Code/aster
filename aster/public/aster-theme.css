@@ -1,0 +1,452 @@
+@import url("https://fonts.googleapis.com/css2?family=Allura&family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap");
+
+:root {
+  --aster-ink: #18212d;
+  --aster-ink-soft: #2b3744;
+  --aster-green: #61d000;
+  --aster-green-dark: #478f12;
+  --aster-cream: #faf7ef;
+  --aster-paper: #fffdf8;
+  --aster-stone: #77746d;
+  --aster-line: rgba(24, 33, 45, 0.12);
+  --aster-shadow: 0 24px 70px rgba(24, 33, 45, 0.12);
+  --page-bg: var(--aster-cream);
+  --page-text: var(--aster-ink);
+  --page-accent: var(--aster-ink);
+}
+
+body {
+  color: var(--aster-ink);
+  font-family: "DM Sans", sans-serif;
+  background:
+    radial-gradient(circle at 86% 5%, rgba(97, 208, 0, 0.16), transparent 24rem),
+    linear-gradient(180deg, #fbf8f0, #ebe7dd);
+}
+
+h1,
+h2,
+.header-welcome-title,
+.hero-popup h1,
+.menu-category-section h2,
+.admin-page-header h1 {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+}
+
+.btn {
+  border-radius: 999px;
+  background: var(--aster-ink);
+  box-shadow: 0 12px 30px rgba(24, 33, 45, 0.18);
+}
+
+.btn:hover {
+  box-shadow: 0 16px 38px rgba(24, 33, 45, 0.23);
+}
+
+.btn.secondary {
+  border: 1px solid var(--aster-line);
+  background: var(--aster-paper);
+  color: var(--aster-ink);
+}
+
+.card {
+  border-color: rgba(255, 255, 255, 0.7);
+  border-radius: 24px;
+  background: rgba(255, 253, 248, 0.82);
+  box-shadow: 0 18px 55px rgba(24, 33, 45, 0.08);
+}
+
+/* Public Aster experience */
+.home-page-premium,
+.home-page-premium-invers {
+  --premium-bg: var(--aster-cream);
+  --premium-panel: rgba(255, 253, 248, 0.88);
+  --premium-ink: var(--aster-ink);
+  --premium-gold: var(--aster-green);
+  --premium-gold-strong: #78df29;
+  --premium-line: var(--aster-line);
+  --premium-green: var(--aster-green-dark);
+  --premium-red: var(--aster-ink-soft);
+  color: var(--aster-ink) !important;
+  font-family: "DM Sans", sans-serif;
+  background:
+    radial-gradient(circle at 82% 3%, rgba(97, 208, 0, 0.18), transparent 26rem),
+    linear-gradient(180deg, #fbf8f0, #ebe7dd) !important;
+}
+
+.home-page-premium .site-header,
+.home-page-premium-invers .site-header {
+  min-height: 430px;
+  border-bottom: 1px solid var(--aster-line);
+  background: var(--aster-ink);
+  box-shadow: 0 24px 70px rgba(24, 33, 45, 0.18);
+}
+
+.home-page-premium .site-header-bg-slideshow,
+.home-page-premium-invers .site-header-bg-slideshow {
+  filter: saturate(0.72) contrast(1.02) brightness(0.82);
+}
+
+.home-page-premium .site-header-bg-slideshow::after,
+.home-page-premium-invers .site-header-bg-slideshow::after {
+  background: linear-gradient(180deg, rgba(24, 33, 45, 0.22), rgba(24, 33, 45, 0.08) 42%, rgba(24, 33, 45, 0.86));
+}
+
+.home-page-premium .brand-mark-logo-btn,
+.home-page-premium-invers .brand-mark-logo-btn {
+  width: clamp(180px, 22vw, 250px);
+  height: 90px;
+  padding: 12px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 24px;
+  background: rgba(250, 247, 239, 0.92);
+  box-shadow: 0 18px 45px rgba(24, 33, 45, 0.24);
+  animation: none;
+}
+
+.home-page-premium .brand-mark-logo-img,
+.home-page-premium-invers .brand-mark-logo-img {
+  object-fit: contain;
+  border-radius: 0;
+}
+
+.home-page-premium h1,
+.home-page-premium h2,
+.home-page-premium h3,
+.home-page-premium-invers h1,
+.home-page-premium-invers h2,
+.home-page-premium-invers h3 {
+  color: var(--aster-ink);
+  font-family: "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+
+.home-page-premium .header-welcome-title,
+.home-page-premium-invers .header-welcome-title {
+  color: white;
+}
+
+.home-page-premium .eyebrow,
+.home-page-premium .gold,
+.home-page-premium-invers .eyebrow,
+.home-page-premium-invers .gold {
+  color: var(--aster-green-dark) !important;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.home-page-premium .site-nav a,
+.home-page-premium .menu-nav-trigger,
+.home-page-premium-invers .site-nav a,
+.home-page-premium-invers .menu-nav-trigger {
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 999px;
+  background: rgba(24, 33, 45, 0.52);
+  color: white;
+  font-family: "DM Sans", sans-serif;
+  text-transform: none;
+}
+
+.home-page-premium .site-nav a:hover,
+.home-page-premium .menu-nav-trigger:hover,
+.home-page-premium-invers .site-nav a:hover,
+.home-page-premium-invers .menu-nav-trigger:hover {
+  border-color: var(--aster-green);
+  background: var(--aster-green);
+  color: var(--aster-ink);
+}
+
+.home-page-premium .menu-tabs-sticky,
+.home-page-premium-invers .menu-tabs-sticky {
+  border: 1px solid var(--aster-line);
+  border-radius: 999px;
+  background: rgba(250, 247, 239, 0.9);
+  box-shadow: 0 12px 34px rgba(24, 33, 45, 0.12);
+  backdrop-filter: blur(16px);
+}
+
+.home-page-premium .menu-tabs .menu-tab,
+.home-page-premium .menu-tabs-sticky .menu-tab,
+.home-page-premium-invers .menu-tabs .menu-tab,
+.home-page-premium-invers .menu-tabs-sticky .menu-tab {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--aster-ink);
+  font-family: "DM Sans", sans-serif;
+  text-transform: none;
+}
+
+.home-page-premium .menu-tabs .menu-tab:hover,
+.home-page-premium .menu-tabs-sticky .menu-tab:hover,
+.home-page-premium .menu-tabs .menu-tab.active,
+.home-page-premium .menu-tabs-sticky .menu-tab.active,
+.home-page-premium-invers .menu-tabs .menu-tab:hover,
+.home-page-premium-invers .menu-tabs-sticky .menu-tab:hover,
+.home-page-premium-invers .menu-tabs .menu-tab.active,
+.home-page-premium-invers .menu-tabs-sticky .menu-tab.active {
+  border-color: var(--aster-green);
+  background: var(--aster-green);
+  color: var(--aster-ink);
+}
+
+.home-page-premium .card,
+.home-page-premium-invers .card,
+.home-page-premium .info-block,
+.home-page-premium-invers .info-block {
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 24px;
+  background: rgba(255, 253, 248, 0.82);
+  box-shadow: 0 18px 55px rgba(24, 33, 45, 0.08);
+}
+
+.home-page-premium .product-card::before,
+.home-page-premium-invers .product-card::before {
+  height: 4px;
+  border-radius: 24px 24px 0 0;
+  background: linear-gradient(90deg, var(--aster-ink), var(--aster-green));
+}
+
+.home-page-premium .product-price,
+.home-page-premium-invers .product-price {
+  border-color: var(--aster-green);
+  border-radius: 999px;
+  background: var(--aster-green);
+  color: var(--aster-ink);
+}
+
+.home-page-premium .muted,
+.home-page-premium-invers .muted {
+  color: var(--aster-stone);
+}
+
+.home-page-premium .btn,
+.home-page-premium-invers .btn {
+  border-radius: 999px;
+  background: var(--aster-ink);
+  color: white;
+  font-family: "DM Sans", sans-serif;
+  text-transform: none;
+}
+
+.home-page-premium .btn:hover,
+.home-page-premium-invers .btn:hover {
+  background: var(--aster-green);
+  color: var(--aster-ink);
+}
+
+/* Ordering, payment, reservation and event flows */
+body.zema-page-theme,
+body.zema-page-theme-premium {
+  --premium-bg: var(--aster-cream);
+  --premium-panel: var(--aster-paper);
+  --premium-ink: var(--aster-ink);
+  --premium-gold: var(--aster-green);
+  --premium-gold-strong: var(--aster-green-dark);
+  --premium-line: var(--aster-line);
+  color: var(--aster-ink);
+  font-family: "DM Sans", sans-serif;
+  background:
+    radial-gradient(circle at 86% 5%, rgba(97, 208, 0, 0.14), transparent 24rem),
+    linear-gradient(180deg, #fbf8f0, #ebe7dd);
+}
+
+body.zema-page-theme .hero,
+body.zema-page-theme-premium .hero {
+  color: white;
+  background:
+    radial-gradient(circle at 78% 20%, rgba(97, 208, 0, 0.4), transparent 18rem),
+    linear-gradient(145deg, var(--aster-ink-soft), var(--aster-ink));
+}
+
+body.zema-page-theme .card,
+body.zema-page-theme-premium .card,
+body.zema-page-theme-premium .order-cart-panel,
+body.zema-page-theme-premium .order-list-panel {
+  border-color: rgba(255, 255, 255, 0.72);
+  border-radius: 24px;
+  background: rgba(255, 253, 248, 0.88);
+  color: var(--aster-ink);
+  box-shadow: 0 18px 55px rgba(24, 33, 45, 0.08);
+}
+
+body.zema-page-theme-premium .btn,
+body.zema-page-theme-premium .cart-button,
+body.zema-page-theme-premium .qty button,
+body.zema-page-theme-premium .option-card {
+  border-radius: 999px;
+}
+
+.aster-order-logo {
+  width: 132px;
+  height: 48px;
+  padding: 5px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 14px;
+  background: rgba(250, 247, 239, 0.94);
+  object-fit: contain;
+}
+
+.page-brand-mark-corner {
+  width: 112px;
+  border: 0;
+  border-radius: 14px;
+  background: url("/aster-logo.png") center / contain no-repeat;
+  box-shadow: none;
+}
+
+/* Aster ERP */
+.admin-shell {
+  max-width: 1560px;
+  color: var(--aster-ink);
+  font-family: "DM Sans", sans-serif;
+}
+
+.admin-sidebar {
+  border: 0;
+  border-radius: 26px;
+  background: var(--aster-ink);
+  box-shadow: 0 22px 60px rgba(24, 33, 45, 0.18);
+}
+
+.admin-brand-mark,
+.backoffice-brand-mark {
+  border: 0;
+  background: var(--aster-green);
+  color: var(--aster-ink);
+  box-shadow: 0 10px 28px rgba(97, 208, 0, 0.22);
+}
+
+.admin-brand-label {
+  color: white;
+  letter-spacing: 0.18em;
+}
+
+.admin-brand small,
+.admin-user-chip {
+  color: #aeb8bf;
+}
+
+.admin-nav-group-title {
+  color: #86929b;
+}
+
+.admin-nav-link {
+  border-radius: 13px;
+  color: #dfe4e8;
+}
+
+.admin-nav-link:hover,
+.admin-nav-link.active {
+  border-color: transparent;
+  background: var(--aster-green);
+  color: var(--aster-ink);
+  box-shadow: none;
+}
+
+.admin-nav-link.active small,
+.admin-nav-link:hover small {
+  color: rgba(24, 33, 45, 0.72);
+}
+
+.admin-panel .card,
+.metric,
+.table-wrap {
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 22px;
+  background: rgba(255, 253, 248, 0.86);
+  box-shadow: 0 16px 46px rgba(24, 33, 45, 0.07);
+}
+
+.metric strong,
+.admin-page-header .eyebrow {
+  color: var(--aster-green-dark);
+}
+
+.admin-panel input,
+.admin-panel select,
+.admin-panel textarea {
+  border-color: var(--aster-line);
+  border-radius: 12px;
+  background: var(--aster-paper);
+}
+
+.admin-panel input:focus,
+.admin-panel select:focus,
+.admin-panel textarea:focus {
+  border-color: var(--aster-green);
+  box-shadow: 0 0 0 4px rgba(97, 208, 0, 0.14);
+  outline: none;
+}
+
+.admin-header-bar {
+  border: 1px solid var(--aster-line);
+  border-radius: 22px;
+  background: rgba(255, 253, 248, 0.92);
+  box-shadow: 0 16px 46px rgba(24, 33, 45, 0.08);
+}
+
+.admin-header-brand .admin-brand-label {
+  color: var(--aster-ink);
+}
+
+.admin-header-link.active,
+.admin-header-group.active .admin-header-group-title {
+  background: var(--aster-green);
+  color: var(--aster-ink);
+}
+
+.pwa-install {
+  border-color: rgba(97, 208, 0, 0.35);
+  background: rgba(255, 253, 248, 0.96);
+}
+
+.pwa-install-button {
+  border-radius: 999px;
+  background: var(--aster-ink);
+}
+
+.home-page-premium .product-catalog-panel.card,
+.home-page-premium-invers .product-catalog-panel.card {
+  border-color: rgba(255, 255, 255, 0.72) !important;
+  background: rgba(255, 253, 248, 0.9) !important;
+  color: var(--aster-ink) !important;
+}
+
+.home-page-premium .site-nav > a,
+.home-page-premium-invers .site-nav > a,
+.home-page-premium .menu-nav-trigger,
+.home-page-premium-invers .menu-nav-trigger {
+  border-color: rgba(255, 255, 255, 0.38) !important;
+  background: var(--aster-ink) !important;
+  color: white !important;
+}
+
+.home-page-premium .site-nav > a:hover,
+.home-page-premium-invers .site-nav > a:hover,
+.home-page-premium .menu-nav-trigger:hover,
+.home-page-premium-invers .menu-nav-trigger:hover {
+  border-color: var(--aster-green) !important;
+  background: var(--aster-green) !important;
+  color: var(--aster-ink) !important;
+}
+
+@media (max-width: 760px) {
+  .home-page-premium .site-header,
+  .home-page-premium-invers .site-header {
+    min-height: 300px;
+  }
+
+  .home-page-premium .brand-mark-logo-btn,
+  .home-page-premium-invers .brand-mark-logo-btn {
+    width: 150px;
+    height: 66px;
+  }
+
+  .page-brand-mark-corner {
+    width: 86px;
+    height: 42px;
+  }
+}
