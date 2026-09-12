@@ -6,6 +6,28 @@ export const GOOGLE_RESERVATION_URL_KEY = "aster-google-reservation-url";
 export const DEFAULT_GOOGLE_REVIEW_URL = "https://www.google.de/maps/place/Zema/@50.9592474,6.9417788,17z/data=!4m8!3m7!1s0x47bf25fa97822a91:0x966a72726844da2a!8m2!3d50.959244!4d6.9443484!9m1!1b1!16s%2Fg%2F11mkvct_hy?entry=ttu&g_ep=EgoyMDI2MDgyNi4wIKXMDSoASAFQAw%3D%3D";
 export const DEFAULT_GOOGLE_RESERVATION_URL = "https://www.google.com/search?q=Zema+Restaurant+Reservierung";
 
+export type FrontendSettings = {
+  brand: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  ctaLabel: string;
+  headerBackgroundImage: string;
+  bodyBackground: string;
+  bodyTextColor: string;
+  accentColor: string;
+};
+
+export const DEFAULT_FRONTEND_SETTINGS: FrontendSettings = {
+  brand: "Aster Caffe",
+  heroTitle: "Ein Tisch voller Geschichten.",
+  heroSubtitle: "Äthiopische Küche, kuratierter Kaffee und herzliche Gastfreundschaft.",
+  ctaLabel: "Tisch bestellen",
+  headerBackgroundImage: "/PHOTO-2026-08-31-16-03-18.jpg",
+  bodyBackground: "#f4f7fb",
+  bodyTextColor: "#111827",
+  accentColor: "#14532d",
+};
+
 export type GoogleReviewSettings = {
   enabled: boolean;
   reviewUrl: string;
@@ -17,6 +39,49 @@ const DEFAULT_GOOGLE_REVIEW_SETTINGS: GoogleReviewSettings = {
   reviewUrl: DEFAULT_GOOGLE_REVIEW_URL,
   reservationUrl: DEFAULT_GOOGLE_RESERVATION_URL,
 };
+
+function cacheFrontendSettings(settings: FrontendSettings) {
+  writeStringSetting(FRONTEND_SETTINGS_KEY, JSON.stringify(settings));
+}
+
+export async function fetchFrontendSettings(): Promise<
+  { ok: true; settings: FrontendSettings } | { ok: false; error: string }
+> {
+  try {
+    const response = await fetch("/api/settings/frontend", { cache: "no-store" });
+    const data = (await response.json()) as { settings?: FrontendSettings; error?: string };
+    if (!response.ok || !data.settings) {
+      return { ok: false, error: data.error || "Einstellungen konnten nicht geladen werden." };
+    }
+    cacheFrontendSettings(data.settings);
+    return { ok: true, settings: data.settings };
+  } catch (error) {
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : "Einstellungen konnten nicht geladen werden.",
+    };
+  }
+}
+
+export async function saveFrontendSettings(
+  settings: FrontendSettings,
+): Promise<{ ok: boolean; error?: string }> {
+  try {
+    const response = await fetch("/api/settings/frontend", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(settings),
+    });
+    const data = (await response.json()) as { settings?: FrontendSettings; error?: string };
+    if (!response.ok || !data.settings) {
+      return { ok: false, error: data.error || "Speichern fehlgeschlagen." };
+    }
+    cacheFrontendSettings(data.settings);
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, error: error instanceof Error ? error.message : "Speichern fehlgeschlagen." };
+  }
+}
 
 export function readBooleanSetting(key: string, fallback = false): boolean {
   if (typeof window === "undefined") return fallback;

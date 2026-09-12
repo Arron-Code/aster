@@ -4,11 +4,14 @@ import { useEffect, useState } from "react";
 import {
   DEFAULT_GOOGLE_RESERVATION_URL,
   DEFAULT_GOOGLE_REVIEW_URL,
+  DEFAULT_FRONTEND_SETTINGS,
   FRONTEND_LANGUAGE_KEY,
   FRONTEND_SETTINGS_KEY,
   fetchActiveFrontpageVersion,
+  fetchFrontendSettings,
   fetchGoogleReviewSettings,
   saveActiveFrontpageVersion,
+  saveFrontendSettings,
   saveGoogleReviewSettings,
   type GoogleReviewSettings,
 } from "@/lib/frontend-tools";
@@ -142,16 +145,7 @@ const languageChoices: { label: string; value: Language; flag: string }[] = [
   { label: "Tigrinya", value: "ti", flag: "????" },
 ];
 
-const defaultSettings = {
-  brand: "Zem?",
-  heroTitle: "Authentische ost afrikanische Küche",
-  heroSubtitle: "Frisch zubereitet, herzlich serviert und überall einladend.",
-  ctaLabel: "Tisch bestellen",
-  headerBackgroundImage: "https://habesha.website/wp-content/uploads/2026/01/zema.jpg",
-  bodyBackground: "#f4f7fb",
-  bodyTextColor: "#111827",
-  accentColor: "#14532d",
-};
+const defaultSettings = DEFAULT_FRONTEND_SETTINGS;
 
 type SettingsField = keyof typeof defaultSettings;
 
@@ -205,6 +199,8 @@ export default function FrontEndToolsPage() {
   const [language, setLanguage] = useState<Language>("de");
   const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
   const [settings, setSettings] = useState(defaultSettings);
+  const [settingsSaving, setSettingsSaving] = useState(false);
+  const [settingsMessage, setSettingsMessage] = useState("");
   const [activeTab, setActiveTab] = useState<"design" | "google" | "version">("design");
   const [googleReviewSettings, setGoogleReviewSettings] = useState<GoogleReviewSettings>({
     enabled: false,
@@ -237,6 +233,13 @@ export default function FrontEndToolsPage() {
     }
 
     fetchGoogleReviewSettings().then(setGoogleReviewSettings);
+    void fetchFrontendSettings().then((result) => {
+      if (result.ok) {
+        setSettings(result.settings);
+      } else {
+        setSettingsMessage(result.error);
+      }
+    });
     fetchActiveFrontpageVersion().then((version) => {
       if (isFrontpageVersionId(version)) {
         setFrontpageVersion(version);
@@ -247,6 +250,10 @@ export default function FrontEndToolsPage() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     window.localStorage.setItem(FRONTEND_SETTINGS_KEY, JSON.stringify(settings));
+  }, [settings]);
+
+  useEffect(() => {
+    setSettingsMessage("");
   }, [settings]);
 
   useEffect(() => {
@@ -275,6 +282,14 @@ export default function FrontEndToolsPage() {
     const result = await saveGoogleReviewSettings(googleReviewSettings);
     setGoogleReviewSaving(false);
     setGoogleReviewMessage(result.ok ? "Gespeichert." : result.error || "Speichern fehlgeschlagen.");
+  }
+
+  async function saveFrontendSettingsToServer() {
+    setSettingsSaving(true);
+    setSettingsMessage("");
+    const result = await saveFrontendSettings(settings);
+    setSettingsSaving(false);
+    setSettingsMessage(result.ok ? "Gespeichert." : result.error || "Speichern fehlgeschlagen.");
   }
 
   async function saveFrontpageVersionToServer(version: FrontpageVersionId) {
@@ -584,6 +599,13 @@ export default function FrontEndToolsPage() {
                   ))}
                 </div>
               </div>
+            </div>
+
+            <div className="admin-actions">
+              <button type="button" className="btn" onClick={saveFrontendSettingsToServer} disabled={settingsSaving}>
+                {settingsSaving ? "Speichern..." : "Änderungen speichern"}
+              </button>
+              {settingsMessage && <span className="muted">{settingsMessage}</span>}
             </div>
           </section>
 

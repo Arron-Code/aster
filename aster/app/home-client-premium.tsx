@@ -4,6 +4,7 @@ import { formatPrice } from "@/lib/format";
 import { useEffect, useRef, useState } from "react";
 import type { Permission } from "@/lib/user-roles";
 import type { FrontpageVersionId } from "@/lib/frontpage-versions";
+import { fetchFrontendSettings } from "@/lib/frontend-tools";
 
 type DbMenuItem = {
   id: string;
@@ -431,6 +432,14 @@ export default function HomeClientPremium({ initialDrinkItems, initialFoodItems,
     } catch {
       // Ignore invalid front-end config.
     }
+
+    void fetchFrontendSettings().then((result) => {
+      if (result.ok) {
+        setSettings((current) => ({ ...current, ...result.settings }));
+      } else {
+        console.error(result.error);
+      }
+    });
   }, []);
 
   useEffect(() => {
