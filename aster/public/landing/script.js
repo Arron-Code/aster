@@ -7,7 +7,7 @@ const coffees = [
     notes: "Jasmin, Bergamotte, Honig und seidige Süße.",
     price: 12.4,
     impact: "Bildungsfonds",
-    visual: "linear-gradient(135deg, #254734, #75a47f)",
+    image: "/landing/assets/5-800x1295.jpg",
   },
   {
     name: "Sidama Bensa Natural",
@@ -17,7 +17,7 @@ const coffees = [
     notes: "Waldbeere, Kakao-Nibs, reife Mango und cremiger Körper.",
     price: 11.8,
     impact: "Wasserzugang",
-    visual: "linear-gradient(135deg, #7a3f25, #d28945)",
+    image: "/landing/assets/6-800x1295.jpg",
   },
   {
     name: "Guji Uraga Honey",
@@ -27,7 +27,7 @@ const coffees = [
     notes: "Aprikose, Blütenhonig, schwarzer Tee und klare Säure.",
     price: 13.2,
     impact: "Frauenkooperativen",
-    visual: "linear-gradient(135deg, #c9953c, #f0d78d)",
+    image: "/landing/assets/7-800x1295.jpg",
   },
   {
     name: "Limu Kossa Washed",
@@ -37,7 +37,7 @@ const coffees = [
     notes: "Zitrus, Karamell, Mandel und ausgewogene Struktur.",
     price: 10.9,
     impact: "Schulmaterial",
-    visual: "linear-gradient(135deg, #243d2f, #b8c69b)",
+    image: "/landing/assets/8-800x1295.jpg",
   },
   {
     name: "Bench Maji Forest Natural",
@@ -47,7 +47,7 @@ const coffees = [
     notes: "Dunkle Kirsche, Gewürze, Nougat und langer Nachhall.",
     price: 12.1,
     impact: "Aufforstung",
-    visual: "linear-gradient(135deg, #381d16, #9d5333)",
+    image: "/landing/assets/9-800x1295.jpg",
   },
   {
     name: "Arsi Highland Honey",
@@ -57,7 +57,7 @@ const coffees = [
     notes: "Pfirsich, Rohrzucker, Hibiskus und elegante Süße.",
     price: 11.6,
     impact: "Gesundheitsstationen",
-    visual: "linear-gradient(135deg, #b46f39, #f3bf69)",
+    image: "/landing/assets/4-800x1295.jpg",
   },
 ];
 
@@ -100,7 +100,9 @@ function renderCoffees(filter = "all") {
     .map(
       (coffee) => `
         <article class="coffee-card">
-          <div class="coffee-visual" style="--visual: ${coffee.visual}"></div>
+          <div class="coffee-visual">
+            <img src="${coffee.image}" alt="${coffee.name}" decoding="async" />
+          </div>
           <div class="coffee-body">
             <h3>${coffee.name}</h3>
             <p>${coffee.notes}</p>
