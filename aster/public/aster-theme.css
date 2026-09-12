@@ -562,6 +562,112 @@ body.zema-page-theme-premium .option-card {
   }
 }
 
+.home-page-premium .site-header.has-content-frame,
+.home-page-premium-invers .site-header.has-content-frame {
+  min-height: max(220px, calc(430px - 5cm));
+}
+
+.home-page-premium .site-header.has-content-frame .header-content-frame-host,
+.home-page-premium-invers .site-header.has-content-frame .header-content-frame-host {
+  filter: none;
+}
+
+.home-page-premium .site-header.has-content-frame .header-content-frame-host::after,
+.home-page-premium-invers .site-header.has-content-frame .header-content-frame-host::after {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.02), rgba(15, 23, 42, 0.08));
+}
+
+.home-page-premium .site-header.has-content-frame .header-brand-top-center,
+.home-page-premium-invers .site-header.has-content-frame .header-brand-top-center {
+  top: 16px;
+  left: 18px;
+  transform: none;
+  animation: none;
+}
+
+.home-page-premium .site-header.has-content-frame .brand-mark-logo-btn,
+.home-page-premium-invers .site-header.has-content-frame .brand-mark-logo-btn {
+  width: 260px;
+  height: 92px;
+  padding: 8px 12px;
+  border-radius: 18px;
+}
+
+.site-header.has-content-frame .header-frame-switcher {
+  opacity: 0.35;
+  background: rgba(15, 23, 42, 0.22);
+  transition: opacity 0.35s ease, background-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.site-header.has-content-frame .header-frame-switcher.is-interacting {
+  opacity: 1;
+  background: rgba(15, 23, 42, 0.82);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.32);
+}
+
+.site-header.has-content-frame .header-frame-switcher button {
+  min-width: 76px;
+  min-height: 44px;
+  border-radius: 22px;
+}
+
+.site-header.has-content-frame .brand-mark-float.header-brand-top-center.header-frame-logo-pulse {
+  animation: header-frame-logo-transparency 60s steps(1, end) infinite;
+}
+
+.site-header.has-content-frame .brand-mark-float.header-brand-top-center.header-frame-logo-pulse:hover,
+.site-header.has-content-frame .brand-mark-float.header-brand-top-center.header-frame-logo-pulse:focus-within {
+  animation: none;
+  opacity: 1;
+}
+
+@keyframes header-frame-logo-transparency {
+  0%,
+  24.999% {
+    opacity: 1;
+  }
+
+  25%,
+  49.999% {
+    opacity: 0.35;
+  }
+
+  50%,
+  74.999% {
+    opacity: 1;
+  }
+
+  75%,
+  99.999% {
+    opacity: 0.35;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.home-page.aster-theme-wholesale .site-header.has-content-frame {
+  min-height: max(240px, calc(510px - 5cm));
+}
+
+.home-page.aster-theme-wholesale .site-header.has-content-frame .site-header-bg-slideshow {
+  top: 0;
+}
+
+@media (max-width: 760px) {
+  .home-page-premium .site-header.has-content-frame,
+  .home-page-premium-invers .site-header.has-content-frame {
+    min-height: max(180px, calc(300px - 5cm));
+  }
+
+  .home-page-premium .site-header.has-content-frame .brand-mark-logo-btn,
+  .home-page-premium-invers .site-header.has-content-frame .brand-mark-logo-btn {
+    width: 170px;
+    height: 64px;
+  }
+}
+
 /* Wholesale header variant: light brand bar, compact service row and icon navigation. */
 body.aster-theme-wholesale,
 .home-page.aster-theme-wholesale {

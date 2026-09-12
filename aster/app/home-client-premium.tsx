@@ -228,17 +228,6 @@ const menuTabs = {
       { name: "Birell / Beer", description: "Klassische Auswahl zum Essen und für entspannte Stunden.", price: "€4,90" },
     ],
   },
-  home: {
-    label: "Melodie für zu Hause",
-    items: [
-      { name: "Ethiopian Coffee Beans", description: "Frisch geröstete Bohnen für die perfekte Tasse zu Hause.", price: "€12,00" },
-      { name: "Berbere Mix", description: "Traditionelles Gewürzmischung für Doro Wot und andere Klassiker.", price: "€8,50" },
-      { name: "Injera Starter Pack", description: "Klassische Zutaten für ein authentisches Zuhause-Set.", price: "€15,90" },
-      { name: "Spice Gift Box", description: "Eine Auswahl typischer äthiopischer Gewürze und Aromen.", price: "€18,50" },
-      { name: "House Coffee Kit", description: "Bohnen, Filter und Zubereitungsanleitung für zu Hause.", price: "€19,90" },
-      { name: "Teatime Set", description: "Aromatische Tee- und Kaffee-Auswahl für entspannte Momente.", price: "€16,20" },
-    ],
-  },
 } as const;
 
 const defaultFrontendSettings = {
@@ -310,9 +299,11 @@ export default function HomeClientPremium({
   const [staffPermissions, setStaffPermissions] = useState<Permission[]>([]);
   const [heroPopupOpen, setHeroPopupOpen] = useState(false);
   const [activeHeaderFrameUrl, setActiveHeaderFrameUrl] = useState(headerFrames[0]?.url ?? "");
+  const [headerFrameControlsActive, setHeaderFrameControlsActive] = useState(false);
   const [activeTab, setActiveTab] = useState<string>("food");
   const brandMarkRef = useRef<HTMLDivElement | null>(null);
   const headerRef = useRef<HTMLElement | null>(null);
+  const headerFrameControlsTimerRef = useRef<number | null>(null);
   const [parallax, setParallax] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -434,6 +425,39 @@ export default function HomeClientPremium({
       }
     });
   }, []);
+
+  const headerFrameSignature = headerFrames.map((frame) => frame.url).join("|");
+
+  const revealHeaderFrameControls = () => {
+    setHeaderFrameControlsActive(true);
+    if (headerFrameControlsTimerRef.current !== null) {
+      window.clearTimeout(headerFrameControlsTimerRef.current);
+    }
+    headerFrameControlsTimerRef.current = window.setTimeout(() => {
+      setHeaderFrameControlsActive(false);
+      headerFrameControlsTimerRef.current = null;
+    }, 10_000);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (headerFrameControlsTimerRef.current !== null) {
+        window.clearTimeout(headerFrameControlsTimerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (headerFrames.length <= 1 || !activeHeaderFrameUrl) return;
+
+    const timer = window.setTimeout(() => {
+      const currentIndex = headerFrames.findIndex((frame) => frame.url === activeHeaderFrameUrl);
+      const nextIndex = currentIndex < 0 ? 0 : (currentIndex + 1) % headerFrames.length;
+      setActiveHeaderFrameUrl(headerFrames[nextIndex]?.url ?? "");
+    }, 15_000);
+
+    return () => window.clearTimeout(timer);
+  }, [activeHeaderFrameUrl, headerFrameSignature]);
 
   useEffect(() => {
     if (!heroPopupOpen || typeof window === "undefined") return;
@@ -587,7 +611,7 @@ export default function HomeClientPremium({
 
   return (
     <div className={`home-page home-page-premium aster-theme-${theme}`} style={{ ...themeVars }}>
-      <header className="site-header" ref={headerRef as any}>
+      <header className={`site-header${headerFrames.length > 0 ? " has-content-frame" : ""}`} ref={headerRef as any}>
         {theme === "wholesale" && (
           <div className="wholesale-service-bar">
             <div className="wrap wholesale-service-bar-inner">
@@ -612,7 +636,13 @@ export default function HomeClientPremium({
           {activeHeaderFrameUrl ? (
             <>
               {headerFrames.length > 1 && (
-                <div className="header-frame-switcher" aria-label="Eingebettete Seite auswählen">
+                <div
+                  className={`header-frame-switcher${headerFrameControlsActive ? " is-interacting" : ""}`}
+                  aria-label="Eingebettete Seite auswählen"
+                  onPointerEnter={revealHeaderFrameControls}
+                  onPointerDown={revealHeaderFrameControls}
+                  onFocus={revealHeaderFrameControls}
+                >
                   {headerFrames.map((frame) => (
                     <button
                       key={frame.url}
@@ -648,7 +678,10 @@ export default function HomeClientPremium({
           )}
         </div>
 
-        <div className="brand-mark-float header-brand-top-center" ref={brandMarkRef}>
+        <div
+          className={`brand-mark-float header-brand-top-center${headerFrames.length > 0 ? " header-frame-logo-pulse" : ""}`}
+          ref={brandMarkRef}
+        >
           <button
             type="button"
             className="brand-mark-logo-btn"
@@ -658,7 +691,11 @@ export default function HomeClientPremium({
             title={t.heading}
             onClick={() => setHeroPopupOpen((open) => !open)}
           >
-            <img src="/aster-logo.png" alt="Aster Caffe" className="brand-mark-logo-img" />
+            <img
+              src={theme === "wholesale" || headerFrames.length > 0 ? "/logo-whitebg_retina.png" : "/aster-logo.png"}
+              alt="Aster Caffe"
+              className="brand-mark-logo-img"
+            />
           </button>
 
           {heroPopupOpen && (
@@ -904,23 +941,6 @@ export default function HomeClientPremium({
             )}
           </section>
 
-          <section className="menu-category-section" id="menu-home">
-            <h2>{menuTabs.home.label}</h2>
-            <div className="grid menu-tab-grid">
-              {menuTabs.home.items.map((item) => (
-                <article key={item.name} className="card product-card product-card-premium">
-                  <div className="product-card-media">
-                    <img src={settings.imageUrl} alt={item.name} loading="lazy" decoding="async" />
-                  </div>
-                  <div className="product-card-copy">
-                    <h3>{item.name}</h3>
-                    <p className="muted">{item.description}</p>
-                    <span className="product-price">{item.price}</span>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
         </div>
 
         <div className="info-block" id="order">
