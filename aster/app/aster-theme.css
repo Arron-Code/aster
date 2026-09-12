@@ -267,6 +267,18 @@ h2,
   backdrop-filter: blur(16px);
 }
 
+.home-page-premium .header-auth-panel,
+.home-page-premium .header-auth-panel *,
+.home-page-premium-invers .header-auth-panel,
+.home-page-premium-invers .header-auth-panel * {
+  color: #111827 !important;
+}
+
+.home-page-premium .header-auth-panel input::placeholder,
+.home-page-premium-invers .header-auth-panel input::placeholder {
+  color: #4b5563 !important;
+}
+
 .home-page-premium .menu-tabs .menu-tab,
 .home-page-premium .menu-tabs-sticky .menu-tab,
 .home-page-premium-invers .menu-tabs .menu-tab,

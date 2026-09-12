@@ -1,0 +1,360 @@
+@import url("./alternative.css");
+
+:root {
+  --espresso: #17202c;
+  --roast: #202a37;
+  --caramel: #58c900;
+  --apricot: #7be000;
+  --milk: #eee9dc;
+  --foam: #faf7ef;
+  --sage: #dce8cf;
+  --olive: #34462f;
+  --logo-green: #61d000;
+  --logo-ink: #18212d;
+  --stone: #9d9587;
+  --line: rgba(24, 33, 45, 0.15);
+  --script: "Allura", cursive;
+}
+
+body {
+  background:
+    radial-gradient(circle at 78% 4%, rgba(97, 208, 0, 0.18), transparent 25rem),
+    radial-gradient(circle at 14% 60%, rgba(157, 149, 135, 0.14), transparent 28rem),
+    linear-gradient(180deg, #fbf8f0 0%, #ece7dc 100%);
+  color: var(--logo-ink);
+}
+
+body::before {
+  border-color: rgba(97, 208, 0, 0.2);
+}
+
+.site-header {
+  min-height: 5rem;
+  padding: 0.55rem 0.75rem 0.55rem 1.1rem;
+  border-color: rgba(24, 33, 45, 0.1);
+  background: rgba(250, 247, 239, 0.86);
+  box-shadow: 0 14px 45px rgba(24, 33, 45, 0.09);
+}
+
+.brand {
+  height: 3.8rem;
+}
+
+.brand img {
+  display: block;
+  width: clamp(10.5rem, 17vw, 14rem);
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.main-nav a {
+  color: #4d5660;
+}
+
+.main-nav a:last-child,
+.nav-toggle {
+  background: var(--logo-ink);
+  color: var(--foam);
+}
+
+.main-nav a:hover {
+  background: rgba(97, 208, 0, 0.12);
+  color: var(--logo-ink);
+}
+
+.hero {
+  grid-template-columns: minmax(0, 1.16fr) minmax(20rem, 0.84fr);
+}
+
+.hero::before {
+  background: rgba(97, 208, 0, 0.1);
+}
+
+.eyebrow {
+  color: #4e8d1a;
+}
+
+.hero h1 {
+  max-width: 11ch;
+  color: var(--logo-ink);
+  line-height: 0.82;
+}
+
+.hero h1 span,
+.hero h1 em {
+  display: block;
+}
+
+.hero h1 em {
+  width: max-content;
+  margin: 0.08em 0 -0.05em 0.28em;
+  color: var(--logo-green);
+  font-family: var(--script);
+  font-size: 1.25em;
+  font-weight: 400;
+  line-height: 0.72;
+  transform: rotate(-3deg);
+}
+
+.hero-lead,
+.section-heading > p,
+.impact-copy > p,
+.contact-section > div > p,
+.proof-card > p {
+  color: #626972;
+}
+
+.button.primary {
+  background: var(--logo-ink);
+  box-shadow: 0 14px 32px rgba(24, 33, 45, 0.2);
+}
+
+.button.primary:hover {
+  box-shadow: 0 18px 42px rgba(24, 33, 45, 0.25);
+}
+
+.button.secondary,
+.chip {
+  border-color: rgba(24, 33, 45, 0.15);
+  color: var(--logo-ink);
+}
+
+.chip.active {
+  border-color: var(--logo-green);
+  background: var(--logo-green);
+  color: var(--logo-ink);
+}
+
+.hero-metrics div {
+  border-color: rgba(24, 33, 45, 0.16);
+}
+
+.hero-metrics dt {
+  color: var(--logo-ink);
+}
+
+.hero-metrics dd {
+  color: #6e747c;
+}
+
+.hero-card {
+  border-radius: 48% 52% 46% 54% / 56% 44% 56% 44%;
+  background:
+    radial-gradient(circle at 68% 19%, rgba(123, 224, 0, 0.42), transparent 18%),
+    linear-gradient(145deg, #6ed900, #4f9c11 34%, #243825 70%, #18212d);
+  box-shadow:
+    0 50px 90px rgba(24, 33, 45, 0.25),
+    inset 14px 10px 34px rgba(221, 255, 190, 0.18);
+}
+
+.hero-card::before {
+  background: rgba(17, 27, 34, 0.36);
+}
+
+.hero-card::after {
+  background: var(--stone);
+  opacity: 0.92;
+}
+
+.hero-card-content {
+  border-color: rgba(250, 247, 239, 0.62);
+  background: rgba(250, 247, 239, 0.9);
+  box-shadow: 0 18px 45px rgba(24, 33, 45, 0.15);
+}
+
+.hero-card-content p {
+  color: #54a40f;
+}
+
+.hero-card-content h2 {
+  color: var(--logo-ink);
+}
+
+.hero-card-content li::before {
+  color: var(--logo-green);
+}
+
+.roast-orbit span {
+  border-color: rgba(250, 247, 239, 0.3);
+}
+
+.roast-orbit span:nth-child(2) {
+  background: var(--logo-green);
+}
+
+.trust-strip {
+  border-color: rgba(24, 33, 45, 0.15);
+}
+
+.trust-strip span {
+  color: var(--logo-ink);
+}
+
+.trust-strip span::after {
+  color: var(--logo-green);
+}
+
+.model-grid article {
+  border-color: rgba(24, 33, 45, 0.14);
+}
+
+.model-grid span {
+  background: var(--logo-ink);
+  color: var(--logo-green);
+}
+
+.model-grid h3,
+.coffee-card h3,
+.coffee-footer strong {
+  color: var(--logo-ink);
+}
+
+.model-grid p,
+.coffee-card p,
+.coffee-meta,
+.form-status {
+  color: #636a72;
+}
+
+.coffee-card {
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(250, 247, 239, 0.75);
+  box-shadow: 0 18px 60px rgba(24, 33, 45, 0.07);
+}
+
+.coffee-card:hover {
+  box-shadow: 0 28px 70px rgba(24, 33, 45, 0.14);
+}
+
+.coffee-visual {
+  filter: saturate(0.75);
+}
+
+.coffee-visual::before {
+  background: linear-gradient(145deg, #5d6b4e, #24322a);
+  box-shadow: 12px 16px 28px rgba(24, 33, 45, 0.25);
+}
+
+.coffee-visual::after {
+  background: rgba(97, 208, 0, 0.46);
+}
+
+.coffee-meta span {
+  border-color: rgba(24, 33, 45, 0.14);
+  background: rgba(97, 208, 0, 0.06);
+}
+
+.impact-section {
+  background:
+    radial-gradient(circle at 89% 18%, rgba(97, 208, 0, 0.9) 0 6rem, transparent 6.1rem),
+    linear-gradient(145deg, #17202c, #283947);
+}
+
+.impact-section .eyebrow {
+  color: var(--logo-green);
+}
+
+.impact-card,
+.contact-form {
+  border-color: rgba(250, 247, 239, 0.62);
+  background: rgba(250, 247, 239, 0.92);
+}
+
+label {
+  color: var(--logo-ink);
+}
+
+input,
+select,
+textarea {
+  border-color: rgba(24, 33, 45, 0.15);
+  background: rgba(250, 247, 239, 0.85);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--logo-green);
+  box-shadow: 0 0 0 4px rgba(97, 208, 0, 0.14);
+}
+
+input[type="range"] {
+  accent-color: var(--logo-green);
+}
+
+.impact-result {
+  background: var(--logo-green);
+  color: var(--logo-ink);
+}
+
+.impact-result span,
+.impact-result p {
+  color: #26351f;
+}
+
+.proof-card.dark {
+  background:
+    radial-gradient(circle at 24% 22%, rgba(97, 208, 0, 0.9) 0 5rem, transparent 5.1rem),
+    linear-gradient(145deg, #26313d, #151d27);
+}
+
+.proof-card.light {
+  background: #dfe8d2;
+}
+
+.proof-card.light .eyebrow {
+  color: #4f891e;
+}
+
+.site-footer {
+  background:
+    radial-gradient(circle at 74% 120%, rgba(97, 208, 0, 0.18), transparent 24rem),
+    var(--logo-ink);
+}
+
+.site-footer::after {
+  border-color: rgba(97, 208, 0, 0.4);
+}
+
+.site-footer a {
+  color: var(--logo-green);
+}
+
+@media (max-width: 900px) {
+  .brand {
+    height: 3.3rem;
+  }
+
+  .brand img {
+    width: 10rem;
+  }
+
+  .main-nav {
+    border-color: rgba(24, 33, 45, 0.12);
+    background: rgba(250, 247, 239, 0.97);
+  }
+
+  .hero h1 {
+    max-width: 8.6ch;
+  }
+}
+
+@media (max-width: 620px) {
+  .site-header {
+    min-height: 4.5rem;
+  }
+
+  .brand {
+    height: 2.9rem;
+  }
+
+  .brand img {
+    width: 8.2rem;
+  }
+
+  .hero h1 em {
+    margin-left: 0.05em;
+    font-size: 1.08em;
+  }
+}
