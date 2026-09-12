@@ -267,7 +267,8 @@ type HomeClientProps = {
   initialFoodItems: DbMenuItem[];
   initialIsAdminUser: boolean;
   theme?: FrontpageVersionId;
-  headerFrameUrl?: string;
+  headerFrames?: { label: string; url: string }[];
+  externalNavigationLinks?: { label: string; url: string }[];
 };
 
 const adminNavigation: { permission: Permission; href: string; label: string }[] = [
@@ -291,7 +292,8 @@ export default function HomeClientPremium({
   initialFoodItems,
   initialIsAdminUser,
   theme = "logo",
-  headerFrameUrl,
+  headerFrames = [],
+  externalNavigationLinks = [],
 }: HomeClientProps) {
   const [language, setLanguage] = useState<Language>("de");
   const [drinkItems, setDrinkItems] = useState<DbMenuItem[]>(initialDrinkItems);
@@ -307,6 +309,7 @@ export default function HomeClientPremium({
   const [isAdminUser, setIsAdminUser] = useState(initialIsAdminUser);
   const [staffPermissions, setStaffPermissions] = useState<Permission[]>([]);
   const [heroPopupOpen, setHeroPopupOpen] = useState(false);
+  const [activeHeaderFrameUrl, setActiveHeaderFrameUrl] = useState(headerFrames[0]?.url ?? "");
   const [activeTab, setActiveTab] = useState<string>("food");
   const brandMarkRef = useRef<HTMLDivElement | null>(null);
   const headerRef = useRef<HTMLElement | null>(null);
@@ -574,6 +577,11 @@ export default function HomeClientPremium({
       </div>
       <a href="/reserve-premium">{t.navReserve}</a>
       <a href="/events-premium">{t.navEvents}</a>
+      {externalNavigationLinks.map((link) => (
+        <a key={link.url} href={link.url} target="_blank" rel="noreferrer">
+          {link.label}
+        </a>
+      ))}
     </nav>
   );
 
@@ -585,31 +593,48 @@ export default function HomeClientPremium({
             <div className="wrap wholesale-service-bar-inner">
               <span>Aster Caffe · Äthiopische Küche & Kaffee</span>
               <nav aria-label="Service-Navigation">
-                <a href="#menu">Speisekarte</a>
-                <a href="/reserve-premium">Reservierung</a>
-                <a href="/events-premium">Events</a>
+                <a href="https://asterscoffee.com/" target="_blank" rel="noreferrer">Asters Home</a>
+                <a href="https://asterscoffee.com/ueber-aster/" target="_blank" rel="noreferrer">Über Aster</a>
+                <a href="https://asterscoffee.com/hilfsprojekte/" target="_blank" rel="noreferrer">Hilfsprojekte</a>
               </nav>
             </div>
           </div>
         )}
 
         <div
-          className={`site-header-bg-slideshow site-header-bg-parallax${headerFrameUrl ? " header-content-frame-host" : ""}`}
-          aria-hidden={headerFrameUrl ? undefined : true}
+          className={`site-header-bg-slideshow site-header-bg-parallax${activeHeaderFrameUrl ? " header-content-frame-host" : ""}`}
+          aria-hidden={activeHeaderFrameUrl ? undefined : true}
           style={{
             ["--parallax-x" as any]: parallax.x,
             ["--parallax-y" as any]: parallax.y,
           }}
         >
-          {headerFrameUrl ? (
-            <iframe
-              className="header-content-frame"
-              src={headerFrameUrl}
-              title="Asters Coffee"
-              loading="eager"
-              referrerPolicy="strict-origin-when-cross-origin"
-              sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-            />
+          {activeHeaderFrameUrl ? (
+            <>
+              {headerFrames.length > 1 && (
+                <div className="header-frame-switcher" aria-label="Eingebettete Seite auswählen">
+                  {headerFrames.map((frame) => (
+                    <button
+                      key={frame.url}
+                      type="button"
+                      aria-pressed={frame.url === activeHeaderFrameUrl}
+                      onClick={() => setActiveHeaderFrameUrl(frame.url)}
+                    >
+                      {frame.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+              <iframe
+                key={activeHeaderFrameUrl}
+                className="header-content-frame"
+                src={activeHeaderFrameUrl}
+                title={headerFrames.find((frame) => frame.url === activeHeaderFrameUrl)?.label ?? "Asters Coffee"}
+                loading="eager"
+                referrerPolicy="strict-origin-when-cross-origin"
+                sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+              />
+            </>
           ) : (
             <>
               <div
