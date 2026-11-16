@@ -16,6 +16,7 @@ import {
   type GoogleReviewSettings,
 } from "@/lib/frontend-tools";
 import { DEFAULT_FRONTPAGE_VERSION, FRONTPAGE_VERSIONS, isFrontpageVersionId, type FrontpageVersionId } from "@/lib/frontpage-versions";
+import { ADMIN_LANGUAGE_EVENT } from "@/lib/admin-language";
 import {
   ADMIN_LAYOUT_CHANGE_EVENT,
   DEFAULT_ADMIN_LAYOUT_MODE,
@@ -220,7 +221,6 @@ const fieldPresets: Record<SettingsField, { label: string; value: string }[]> = 
 
 export default function FrontEndToolsPage() {
   const [language, setLanguage] = useState<Language>("de");
-  const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
   const [settings, setSettings] = useState(defaultSettings);
   const [settingsSaving, setSettingsSaving] = useState(false);
   const [settingsMessage, setSettingsMessage] = useState("");
@@ -289,24 +289,13 @@ export default function FrontEndToolsPage() {
   }, [settings]);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    window.localStorage.setItem(FRONTEND_LANGUAGE_KEY, language);
-  }, [language]);
-
-  useEffect(() => {
-    if (!languageMenuOpen || typeof window === "undefined") return;
-
-    const handlePointerDown = (event: MouseEvent) => {
-      const target = event.target as Node | null;
-      if (!target || !(target instanceof Element)) return;
-      if (!target.closest(".language-picker-wrapper")) {
-        setLanguageMenuOpen(false);
-      }
+    const onLanguageChange = (event: Event) => {
+      const next = (event as CustomEvent<unknown>).detail;
+      if (typeof next === "string" && next in translations) setLanguage(next as Language);
     };
-
-    window.addEventListener("pointerdown", handlePointerDown);
-    return () => window.removeEventListener("pointerdown", handlePointerDown);
-  }, [languageMenuOpen]);
+    window.addEventListener(ADMIN_LANGUAGE_EVENT, onLanguageChange);
+    return () => window.removeEventListener(ADMIN_LANGUAGE_EVENT, onLanguageChange);
+  }, []);
 
   async function saveGoogleReviewSettingsToServer() {
     setGoogleReviewSaving(true);
@@ -333,7 +322,6 @@ export default function FrontEndToolsPage() {
   }
 
   const t = translations[language];
-  const currentLanguageChoice = languageChoices.find((choice) => choice.value === language) ?? languageChoices[0];
 
   return (
     <>
@@ -341,37 +329,6 @@ export default function FrontEndToolsPage() {
         <div>
           <p className="eyebrow">{t.title}</p>
           <h1>{t.title}</h1>
-        </div>
-        <div className="language-picker-wrapper" aria-label={t.language}>
-          <button
-            type="button"
-            className="language-picker compact language-picker-button"
-            aria-label={t.language}
-            aria-expanded={languageMenuOpen}
-            onClick={() => setLanguageMenuOpen((open) => !open)}
-          >
-            <span className="language-icon" aria-hidden="true">{currentLanguageChoice.flag}</span>
-          </button>
-
-          {languageMenuOpen && (
-            <div className="language-menu" role="menu" aria-label={t.language}>
-              {languageChoices.map((choice) => (
-                <button
-                  key={choice.value}
-                  type="button"
-                  className={`language-option${language === choice.value ? " active" : ""}`}
-                  onClick={() => {
-                    setLanguage(choice.value);
-                    setLanguageMenuOpen(false);
-                  }}
-                  aria-pressed={language === choice.value}
-                >
-                  <span aria-hidden="true">{choice.flag}</span>
-                  <span>{choice.label}</span>
-                </button>
-              ))}
-            </div>
-          )}
         </div>
       </header>
 

@@ -18,6 +18,7 @@ import ReservationsPage from "./reservations/page";
 import FrontEndToolsPage from "./frontend-tools/page";
 import PersonalPage from "./personal/page";
 import EventsAdminPage from "./events/page";
+import AdminLanguagePicker from "../admin-language-picker";
 import { DEFAULT_STAFF_USERS, ROLE_DEFINITIONS, type Permission, type Role, type StaffUser } from "@/lib/user-roles";
 
 const adminMenu = [
@@ -211,13 +212,16 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             </div>
           </div>
 
-          <div className="header-user-area">
-            {currentUser && (
-              <div className="admin-user-chip">
-                <span className="admin-user-dot" />
-                <span>{currentUser.name}</span>
-              </div>
-            )}
+          <div className="header-user-area backoffice-user-area">
+            <div className="backoffice-user-block">
+              {currentUser && (
+                <div className="admin-user-chip">
+                  <span className="admin-user-dot" />
+                  <span>{currentUser.name}</span>
+                </div>
+              )}
+              <AdminLanguagePicker />
+            </div>
             <button className="admin-logout" onClick={logout}>
               Abmelden
             </button>

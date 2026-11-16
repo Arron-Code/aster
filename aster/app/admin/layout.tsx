@@ -19,6 +19,7 @@ import FrontEndToolsPage from "./frontend-tools/page";
 import PersonalPage from "./personal/page";
 import EventsAdminPage from "./events/page";
 import PushNotifications from "./push-notifications";
+import AdminLanguagePicker from "../admin-language-picker";
 import { DEFAULT_STAFF_USERS, ROLE_DEFINITIONS, type Permission, type Role, type StaffUser } from "@/lib/user-roles";
 import {
   ADMIN_LAYOUT_CHANGE_EVENT,
@@ -261,6 +262,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 </button>
                 <div className="admin-header-user-menu">
                   <span className="admin-header-user-name">{currentUser ? currentUser.name : "Admin"}</span>
+                  <AdminLanguagePicker />
                   <button className="admin-logout admin-header-logout" onClick={logout}>
                     Abmelden
                   </button>
@@ -290,6 +292,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                   <span>{currentUser.name}</span>
                 </div>
               )}
+              <AdminLanguagePicker />
 
               <div className="admin-nav-list">
                 {groupedMenu.map((group) => (
