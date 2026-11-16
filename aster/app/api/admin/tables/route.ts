@@ -2,7 +2,7 @@ import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { isAdmin, unauthorized } from "@/lib/admin-api";
+import { guard } from "@/lib/admin-api";
 
 const tableSchema = z.object({
   number: z.number().int().min(1).max(9999),
@@ -10,7 +10,8 @@ const tableSchema = z.object({
 });
 
 export async function GET(request: NextRequest) {
-  if (!isAdmin(request)) return unauthorized();
+  const denied = await guard(request);
+  if (denied) return denied;
 
   const tables = await prisma.restaurantTable.findMany({
     orderBy: { number: "asc" },
@@ -42,7 +43,8 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  if (!isAdmin(request)) return unauthorized();
+  const denied = await guard(request);
+  if (denied) return denied;
 
   try {
     const data = tableSchema.parse(await request.json());

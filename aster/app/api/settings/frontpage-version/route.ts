@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { isAdmin, unauthorized } from "@/lib/admin-api";
+import { guard } from "@/lib/admin-api";
 import { DEFAULT_FRONTPAGE_VERSION, isFrontpageVersionId } from "@/lib/frontpage-versions";
 
 const KEY = "frontpage_active_version";
@@ -17,7 +17,8 @@ export async function GET() {
 }
 
 export async function PUT(request: NextRequest) {
-  if (!isAdmin(request)) return unauthorized();
+  const denied = await guard(request);
+  if (denied) return denied;
 
   try {
     const { version } = bodySchema.parse(await request.json());

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { isAdmin, unauthorized } from "@/lib/admin-api";
+import { actorCan, authorize } from "@/lib/admin-api";
 
 const orderStatusFlow = ["NEW", "CONFIRMED", "PREPARING", "SERVED", "PAID"] as const;
 
@@ -27,10 +27,14 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  if (!isAdmin(req)) return unauthorized();
+  const actor = await authorize(req);
+  if (actor instanceof NextResponse) return actor;
   try {
     const { id } = await params;
     const { status, paymentMethod = "CASH" } = bodySchema.parse(await req.json());
+    if (status === "PAID" && !actorCan(actor, "cashier")) {
+      return NextResponse.json({ error: "Zahlungen dürfen nur an der Kasse gebucht werden." }, { status: 403 });
+    }
 
     const order = await prisma.order.findUnique({
       where: { id },

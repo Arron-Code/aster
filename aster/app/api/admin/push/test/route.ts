@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isAdmin, unauthorized } from "@/lib/admin-api";
+import { guard } from "@/lib/admin-api";
 import { sendAdminPushNotification } from "@/lib/push-notifications";
 
 export async function POST(request: NextRequest) {
-  if (!isAdmin(request)) return unauthorized();
+  const denied = await guard(request);
+  if (denied) return denied;
 
   const result = await sendAdminPushNotification({
     title: "Zema Push ist aktiv",

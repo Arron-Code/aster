@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { adminCookieName, validAdminToken } from "@/lib/admin-auth";
+import { guard } from "@/lib/admin-api";
 const item = z.object({
   name: z.string().trim().min(1).max(100),
   description: z.string().trim().max(500),
@@ -15,12 +15,9 @@ const item = z.object({
   deliveryTimeDays: z.number().int().min(0).max(365).nullable().optional(),
   supplierId: z.string().min(1).nullable().optional(),
 });
-function ok(req: NextRequest) {
-  return validAdminToken(req.cookies.get(adminCookieName())?.value);
-}
 export async function GET(req: NextRequest) {
-  if (!ok(req))
-    return NextResponse.json({ error: "Nicht angemeldet" }, { status: 401 });
+  const denied = await guard(req);
+  if (denied) return denied;
   return NextResponse.json(
     await prisma.menuItem.findMany({
       include: { supplier: true },
@@ -34,8 +31,8 @@ export async function GET(req: NextRequest) {
   );
 }
 export async function POST(req: NextRequest) {
-  if (!ok(req))
-    return NextResponse.json({ error: "Nicht angemeldet" }, { status: 401 });
+  const denied = await guard(req);
+  if (denied) return denied;
   try {
     const payload = item.parse(await req.json());
     return NextResponse.json(

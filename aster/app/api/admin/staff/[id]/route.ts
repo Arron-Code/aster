@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { isAdmin, unauthorized } from "@/lib/admin-api";
+import { guard } from "@/lib/admin-api";
 import { prisma } from "@/lib/prisma";
 
 const staffSchema = z.object({
@@ -20,7 +20,8 @@ function passwordHash(personnelNumber: string) {
 }
 
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  if (!isAdmin(req)) return unauthorized();
+  const denied = await guard(req);
+  if (denied) return denied;
   const { id } = await params;
   const payload = staffSchema.parse(await req.json());
   const existing = await prisma.staffMember.findUniqueOrThrow({ where: { id } });

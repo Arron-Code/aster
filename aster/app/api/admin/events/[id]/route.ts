@@ -1,7 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { guard } from "@/lib/admin-api";
 import { prisma } from "@/lib/prisma";
 
-export async function DELETE(_: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const denied = await guard(request);
+  if (denied) return denied;
   try {
     const { id } = await params;
     await prisma.eventAttendee.deleteMany({ where: { eventId: id } });

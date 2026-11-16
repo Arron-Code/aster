@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { isAdmin, unauthorized } from "@/lib/admin-api";
+import { guard } from "@/lib/admin-api";
 
 const tableSchema = z.object({
   number: z.number().int().min(1).max(9999),
@@ -12,7 +12,8 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  if (!isAdmin(request)) return unauthorized();
+  const denied = await guard(request);
+  if (denied) return denied;
 
   try {
     const data = tableSchema.parse(await request.json());
@@ -36,7 +37,8 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  if (!isAdmin(request)) return unauthorized();
+  const denied = await guard(request);
+  if (denied) return denied;
 
   try {
     const { id } = await params;

@@ -55,4 +55,13 @@ Die Werte anschließend als `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` 
 
 Auf dem Hosting die drei Umgebungsvariablen `DATABASE_URL`, `ADMIN_PASSWORD` und `ADMIN_SESSION_SECRET` setzen. Danach die Datenbank einmal mit `npm run db:push` initialisieren und mit `npm run db:seed` Beispieldaten anlegen. Build: `npm run build`, Start: `npm start`.
 
-Für einen öffentlichen Produktionsbetrieb sollte als nächster Schritt eine Benutzerverwaltung mit individuellen Mitarbeiterkonten/Rollen, Rate-Limiting, Audit-Log, CSRF-Konzept, Backup-Strategie und ein Bestell-/Küchendashboard ergänzt werden. Das aktuelle Admin-Passwort ist für einen kleinen MVP gedacht.
+## Sicherheit und Betrieb
+
+- **Rollen:** Die Berechtigungen der Rollen (Admin, Manager, Service, Küche, Backoffice) werden serverseitig in `lib/admin-api.ts` erzwungen. Rolle und Aktiv-Status kommen bei jeder Anfrage aus der Datenbank. Mitarbeiter und Rollenrechte ändern darf nur der Admin, Zahlungen (Status „Bezahlt“) nur Rollen mit Kassenrecht.
+- **Rate-Limiting:** Anmeldungen werden nach 10 Fehlversuchen pro IP, 5 pro E-Mail oder 100 insgesamt innerhalb von 15 Minuten gesperrt (HTTP 429). Öffentliche Reservierungs- und Event-Formulare haben ein einfaches Limit pro Serverinstanz.
+- **Audit-Log:** Tabelle `AuditLog` mit Logins (`LOGIN_OK`, `LOGIN_FAILED`), allen schreibenden Admin-Aufrufen (`API_WRITE`), verweigertem Zugriff (`ACCESS_DENIED`) und blockierten Cross-Site-Anfragen (`CSRF_BLOCKED`). Die Migration läuft beim Build (`prisma migrate deploy`).
+- **CSRF:** Session-Cookie mit `SameSite=Strict`, zusätzlich werden schreibende Admin-Anfragen und der Login mit fremdem `Origin` oder `Sec-Fetch-Site: cross-site` abgelehnt.
+- **Backup:** `npm run db:backup` schreibt alle Tabellen als JSON nach `backups/` (nicht im Git, enthält personenbezogene Daten). Zusätzlich beim Datenbankanbieter automatische Backups bzw. Point-in-Time-Recovery aktivieren.
+- **Küchendisplay:** Unter „Küchendisplay“ im Backoffice sehen Küche und Service offene Bestellungen als Tickets (Neu, Bestätigt, In Zubereitung) mit Wartezeit und Statuswechsel. Die Ansicht aktualisiert sich alle 10 Sekunden.
+
+Für einen größeren Produktionsbetrieb sollten zusätzlich individuelle Passwörter statt Personalnummer-Login, Zwei-Faktor-Anmeldung und eine Aufbewahrungsfrist für das Audit-Log ergänzt werden.

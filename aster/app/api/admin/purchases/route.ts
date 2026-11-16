@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-import { isAdmin, unauthorized } from "@/lib/admin-api";
+import { guard } from "@/lib/admin-api";
 
 const itemSchema = z.object({
   menuItemId: z.string().min(1),
@@ -34,7 +34,8 @@ function serializePurchase(purchase: PurchaseWithItems) {
 }
 
 export async function GET(req: NextRequest) {
-  if (!isAdmin(req)) return unauthorized();
+  const denied = await guard(req);
+  if (denied) return denied;
 
   const [purchases, suppliers, products, ingredients] = await Promise.all([
     prisma.purchaseOrder.findMany({
@@ -68,7 +69,8 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  if (!isAdmin(req)) return unauthorized();
+  const denied = await guard(req);
+  if (denied) return denied;
 
   try {
     const data = schema.parse(await req.json());

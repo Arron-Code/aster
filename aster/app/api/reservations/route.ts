@@ -1,7 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { guard } from "@/lib/admin-api";
+import { clientIp } from "@/lib/audit";
 import { prisma } from "@/lib/prisma";
 import { sendAdminPushNotification } from "@/lib/push-notifications";
+import { hitLimit } from "@/lib/security";
 
 const reservationSchema = z.object({
   tableId: z.string().min(1),
@@ -15,6 +18,9 @@ const reservationSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  if (hitLimit(`reservation:${clientIp(request)}`, 5, 10 * 60 * 1000)) {
+    return NextResponse.json({ error: "Zu viele Anfragen. Bitte später erneut versuchen." }, { status: 429 });
+  }
   try {
     const data = reservationSchema.parse(await request.json());
 
@@ -94,7 +100,9 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const denied = await guard(request);
+  if (denied) return denied;
   const reservations = await prisma.reservation.findMany({
     orderBy: { reservationDate: "asc" },
     include: { table: true },

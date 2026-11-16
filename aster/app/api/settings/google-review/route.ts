@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { isAdmin, unauthorized } from "@/lib/admin-api";
+import { guard } from "@/lib/admin-api";
 
 const DEFAULT_GOOGLE_REVIEW_URL = "https://www.google.de/maps/place/Zema/@50.9592474,6.9417788,17z/data=!4m8!3m7!1s0x47bf25fa97822a91:0x966a72726844da2a!8m2!3d50.959244!4d6.9443484!9m1!1b1!16s%2Fg%2F11mkvct_hy?entry=ttu&g_ep=EgoyMDI2MDgyNi4wIKXMDSoASAFQAw%3D%3D";
 const DEFAULT_GOOGLE_RESERVATION_URL = "https://www.google.com/search?q=Habesha+Restaurant+Reservierung";
@@ -32,7 +32,8 @@ export async function GET() {
 }
 
 export async function PUT(request: NextRequest) {
-  if (!isAdmin(request)) return unauthorized();
+  const denied = await guard(request);
+  if (denied) return denied;
 
   try {
     const { enabled, reviewUrl, reservationUrl } = bodySchema.parse(await request.json());

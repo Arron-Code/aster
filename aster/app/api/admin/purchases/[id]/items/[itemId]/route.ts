@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { isAdmin, unauthorized } from "@/lib/admin-api";
+import { guard } from "@/lib/admin-api";
 
 const updateSchema = z.object({
   action: z.enum(["cancel", "update", "store"]),
@@ -13,7 +13,8 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string; itemId: string }> },
 ) {
-  if (!isAdmin(req)) return unauthorized();
+  const denied = await guard(req);
+  if (denied) return denied;
 
   try {
     const { id, itemId } = await params;

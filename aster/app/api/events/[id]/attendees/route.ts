@@ -1,12 +1,17 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { clientIp } from "@/lib/audit";
 import { prisma } from "@/lib/prisma";
+import { hitLimit } from "@/lib/security";
 
 const attendeeSchema = z.object({
   name: z.string().min(2).max(80),
 });
 
 export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  if (hitLimit(`attendee:${clientIp(request)}`, 10, 10 * 60 * 1000)) {
+    return NextResponse.json({ error: "Zu viele Anfragen. Bitte später erneut versuchen." }, { status: 429 });
+  }
   try {
     const payload = attendeeSchema.parse(await request.json());
     const { id: eventId } = await params;

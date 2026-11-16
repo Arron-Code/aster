@@ -1,5 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { guard } from "@/lib/admin-api";
 import { prisma } from "@/lib/prisma";
 
 const statusSchema = z.object({
@@ -22,7 +23,9 @@ const createEventSchema = z.object({
   { message: "Datum und Uhrzeit sind erforderlich." },
 );
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const denied = await guard(request);
+  if (denied) return denied;
   const events = await prisma.event.findMany({
     orderBy: { eventDate: "asc" },
     include: { attendees: { orderBy: { createdAt: "asc" } } },
@@ -37,7 +40,9 @@ export async function GET() {
   );
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  const denied = await guard(request);
+  if (denied) return denied;
   try {
     const payload = createEventSchema.parse(await request.json());
     const eventDate = new Date(payload.eventDate || `${payload.date}T${payload.time}:00`);
@@ -69,7 +74,9 @@ export async function POST(request: Request) {
   }
 }
 
-export async function PATCH(request: Request) {
+export async function PATCH(request: NextRequest) {
+  const denied = await guard(request);
+  if (denied) return denied;
   try {
     const payload = statusSchema.parse(await request.json());
     const event = await prisma.event.update({

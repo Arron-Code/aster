@@ -6,6 +6,7 @@ import DashboardPage from "./page";
 import FinancePage from "./finance/page";
 import MenuPage from "./menu/page";
 import OrdersPage from "./orders/page";
+import KitchenPage from "./kitchen/page";
 import CashierPage from "./cashier/page";
 import InventoryPage from "./inventory/page";
 import RecipesPage from "./recipes/page";
@@ -30,8 +31,9 @@ import {
 
 const adminMenu = [
   { key: "dashboard", href: "/admin", label: "Dashboard", description: "Übersicht", permission: "dashboard", group: "Betrieb" },
-  { key: "finance", href: "/admin/finance", label: "Finanzen", description: "Buchhaltung", permission: "dashboard", group: "Verwaltung" },
+  { key: "finance", href: "/admin/finance", label: "Finanzen", description: "Buchhaltung", permission: "cashier", group: "Verwaltung" },
   { key: "orders", href: "/admin/orders", label: "Bestellungen", description: "Aufträge", permission: "orders", group: "Betrieb" },
+  { key: "kitchen", href: "/admin/kitchen", label: "Küchendisplay", description: "Zubereitung", permission: "orders", group: "Betrieb" },
   { key: "cashier", href: "/admin/cashier", label: "Kasse", description: "Zahlungen", permission: "cashier", group: "Betrieb" },
   { key: "tables", href: "/admin/tables", label: "Tische", description: "QR-Codes", permission: "tables", group: "Betrieb" },
   { key: "events", href: "/admin/events", label: "Events", description: "Veranstaltungen", permission: "tables", group: "Betrieb" },
@@ -133,6 +135,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         return <MenuPage />;
       case "orders":
         return <OrdersPage />;
+      case "kitchen":
+        return <KitchenPage />;
       case "cashier":
         return <CashierPage />;
       case "inventory":

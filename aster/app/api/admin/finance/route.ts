@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { isAdmin, unauthorized } from "@/lib/admin-api";
+import { guard } from "@/lib/admin-api";
 
 const costCategories = [
   "PERSONNEL",
@@ -64,7 +64,8 @@ function signedCashAmount(type: string, amountCents: number) {
 }
 
 export async function GET(req: NextRequest) {
-  if (!isAdmin(req)) return unauthorized();
+  const denied = await guard(req);
+  if (denied) return denied;
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -293,7 +294,8 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  if (!isAdmin(req)) return unauthorized();
+  const denied = await guard(req);
+  if (denied) return denied;
 
   const raw = await req.json();
   if (raw.kind === "cost") {
@@ -338,7 +340,8 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  if (!isAdmin(req)) return unauthorized();
+  const denied = await guard(req);
+  if (denied) return denied;
 
   const raw = await req.json();
   if (raw.kind === "cost") {
@@ -385,7 +388,8 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  if (!isAdmin(req)) return unauthorized();
+  const denied = await guard(req);
+  if (denied) return denied;
 
   const { searchParams } = new URL(req.url);
   const kind = searchParams.get("kind");

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { isAdmin, unauthorized } from "@/lib/admin-api";
+import { guard } from "@/lib/admin-api";
 const schema = z.object({
   name: z.string().trim().min(1).max(100),
   unit: z.string().trim().min(1).max(20),
@@ -13,7 +13,8 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  if (!isAdmin(req)) return unauthorized();
+  const denied = await guard(req);
+  if (denied) return denied;
   try {
     const { id } = await params;
     return NextResponse.json(

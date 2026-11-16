@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { isAdmin, unauthorized } from "@/lib/admin-api";
+import { guard } from "@/lib/admin-api";
 export async function GET(req: NextRequest) {
-  if (!isAdmin(req)) return unauthorized();
+  const denied = await guard(req);
+  if (denied) return denied;
   const start = new Date();
   start.setHours(0, 0, 0, 0);
   const [orders, openOrders, lowStock, ingredients] = await Promise.all([

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { isAdmin, unauthorized } from "@/lib/admin-api";
+import { guard } from "@/lib/admin-api";
 const schema = z.object({
   name: z.string().trim().min(1).max(100),
   unit: z.string().trim().min(1).max(20),
@@ -11,7 +11,8 @@ const schema = z.object({
   active: z.boolean().default(true),
 });
 export async function GET(req: NextRequest) {
-  if (!isAdmin(req)) return unauthorized();
+  const denied = await guard(req);
+  if (denied) return denied;
   const rows = await prisma.ingredient.findMany({ orderBy: { name: "asc" } });
   return NextResponse.json(
     rows.map((x) => ({
@@ -22,7 +23,8 @@ export async function GET(req: NextRequest) {
   );
 }
 export async function POST(req: NextRequest) {
-  if (!isAdmin(req)) return unauthorized();
+  const denied = await guard(req);
+  if (denied) return denied;
   try {
     const data = schema.parse(await req.json());
     const row = await prisma.$transaction(async (tx) => {

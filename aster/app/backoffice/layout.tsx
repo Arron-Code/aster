@@ -6,6 +6,7 @@ import DashboardPage from "./page";
 import FinancePage from "../admin/finance/page";
 import MenuPage from "./menu/page";
 import OrdersPage from "./orders/page";
+import KitchenPage from "./kitchen/page";
 import CashierPage from "../admin/cashier/page";
 import InventoryPage from "./inventory/page";
 import RecipesPage from "./recipes/page";
@@ -21,8 +22,9 @@ import { DEFAULT_STAFF_USERS, ROLE_DEFINITIONS, type Permission, type Role, type
 
 const adminMenu = [
   { key: "dashboard", href: "/backoffice", adminHref: "/admin", label: "Dashboard", description: "Übersicht", permission: "dashboard", group: "Übersicht" },
-  { key: "finance", href: "/backoffice/finance", adminHref: "/admin/finance", label: "Finanzen", description: "Buchhaltung", permission: "dashboard", group: "Übersicht" },
+  { key: "finance", href: "/backoffice/finance", adminHref: "/admin/finance", label: "Finanzen", description: "Buchhaltung", permission: "cashier", group: "Übersicht" },
   { key: "orders", href: "/backoffice/orders", adminHref: "/admin/orders", label: "Bestellmonitor", description: "Aufträge", permission: "orders", group: "Übersicht" },
+  { key: "kitchen", href: "/backoffice/kitchen", adminHref: "/admin/kitchen", label: "Küchendisplay", description: "Zubereitung", permission: "orders", group: "Übersicht" },
   { key: "tables", href: "/backoffice/tables", adminHref: "/admin/tables", label: "Tischmonitor", description: "Tische", permission: "tables", group: "Übersicht" },
   { key: "cashier", href: "/backoffice/cashier", adminHref: "/admin/cashier", label: "Kasse", description: "Zahlungen", permission: "cashier", group: "Service" },
   { key: "reservations", href: "/backoffice/reservations", adminHref: "/admin/reservations", label: "Reservierungen", description: "Tischanfragen", permission: "tables", group: "Service" },
@@ -135,6 +137,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         return <MenuPage />;
       case "orders":
         return <OrdersPage />;
+      case "kitchen":
+        return <KitchenPage />;
       case "cashier":
         return <CashierPage />;
       case "inventory":

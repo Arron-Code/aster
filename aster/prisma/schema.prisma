@@ -492,3 +492,20 @@ model JournalLine {
   creditCents     Int                @default(0)
   @@index([accountId, journalEntryId])
 }
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  action    String
+  success   Boolean  @default(true)
+  actorId   String?
+  actorRole String?
+  actorName String?
+  method    String?
+  path      String?
+  ip        String?
+  detail    String?
+  @@index([createdAt])
+  @@index([action, ip, createdAt])
+  @@index([action, actorName, createdAt])
+}

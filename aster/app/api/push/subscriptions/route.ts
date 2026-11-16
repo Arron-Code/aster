@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { isAdmin, unauthorized } from "@/lib/admin-api";
+import { guard } from "@/lib/admin-api";
 import { prisma } from "@/lib/prisma";
 
 const subscriptionSchema = z.object({
@@ -12,7 +12,8 @@ const subscriptionSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
-  if (!isAdmin(request)) return unauthorized();
+  const denied = await guard(request);
+  if (denied) return denied;
 
   const subscription = subscriptionSchema.parse(await request.json());
   const saved = await prisma.pushSubscription.upsert({
@@ -34,7 +35,8 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  if (!isAdmin(request)) return unauthorized();
+  const denied = await guard(request);
+  if (denied) return denied;
 
   const { endpoint } = z.object({ endpoint: z.string().url() }).parse(await request.json());
   await prisma.pushSubscription.deleteMany({ where: { endpoint } });

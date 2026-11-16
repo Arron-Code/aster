@@ -20,18 +20,18 @@ export async function GET(req: NextRequest) {
 
   const staffMember = await prisma.staffMember.findUnique({
     where: { id: session.staffId },
-    select: { name: true, email: true, active: true },
+    select: { name: true, email: true, active: true, role: true },
   });
 
   if (!staffMember?.active) {
     return NextResponse.json({ isAdmin: false });
   }
 
-  if (!(session.role in ROLE_DEFINITIONS)) {
+  const role = staffMember.role.toLowerCase() as Role;
+  if (!(role in ROLE_DEFINITIONS)) {
     return NextResponse.json({ isAdmin: false });
   }
 
-  const role = session.role as Role;
   return NextResponse.json({
     isAdmin: true,
     name: staffMember.name,

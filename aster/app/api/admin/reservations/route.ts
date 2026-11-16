@@ -1,8 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { guard } from "@/lib/admin-api";
 import { prisma } from "@/lib/prisma";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const denied = await guard(request);
+  if (denied) return denied;
   const reservations = await prisma.reservation.findMany({
     orderBy: [{ reservationDate: "asc" }, { createdAt: "desc" }],
     include: { table: true },
@@ -11,7 +14,9 @@ export async function GET() {
   return NextResponse.json(reservations);
 }
 
-export async function PATCH(request: Request) {
+export async function PATCH(request: NextRequest) {
+  const denied = await guard(request);
+  if (denied) return denied;
   try {
     const schema = z.object({
       reservationId: z.string().min(1),

@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { adminCookieName, validAdminToken } from "@/lib/admin-auth";
-
-function ok(req: NextRequest) {
-  return validAdminToken(req.cookies.get(adminCookieName())?.value);
-}
+import { guard } from "@/lib/admin-api";
 
 // Erlaubte Datenbankfelder von MenuItem, die per Excel / Batch gesetzt werden können
 const ALLOWED_MENU_FIELDS = [
@@ -55,9 +51,8 @@ const bulkDeletePayloadSchema = z.object({
 
 // GET: Liefert Metadaten über erlaubte Spalten
 export async function GET(req: NextRequest) {
-  if (!ok(req)) {
-    return NextResponse.json({ error: "Nicht angemeldet" }, { status: 401 });
-  }
+  const denied = await guard(req);
+  if (denied) return denied;
 
   return NextResponse.json({
     allowedFields: ALLOWED_MENU_FIELDS,
@@ -79,9 +74,8 @@ export async function GET(req: NextRequest) {
 
 // POST: Speichern von Excel / Bulk-Importierten Zeilen mit Spaltenprüfung
 export async function POST(req: NextRequest) {
-  if (!ok(req)) {
-    return NextResponse.json({ error: "Nicht angemeldet" }, { status: 401 });
-  }
+  const denied = await guard(req);
+  if (denied) return denied;
 
   try {
     const raw = await req.json();
@@ -193,9 +187,8 @@ export async function POST(req: NextRequest) {
 
 // PATCH: Bulk-Update von einem oder mehreren Feldern für alle oder ausgewählte Positionen
 export async function PATCH(req: NextRequest) {
-  if (!ok(req)) {
-    return NextResponse.json({ error: "Nicht angemeldet" }, { status: 401 });
-  }
+  const denied = await guard(req);
+  if (denied) return denied;
 
   try {
     const raw = await req.json();
@@ -282,9 +275,8 @@ export async function PATCH(req: NextRequest) {
 
 // DELETE: Bulk-Löschen von ausgewählten oder allen Positionen
 export async function DELETE(req: NextRequest) {
-  if (!ok(req)) {
-    return NextResponse.json({ error: "Nicht angemeldet" }, { status: 401 });
-  }
+  const denied = await guard(req);
+  if (denied) return denied;
 
   try {
     const raw = await req.json().catch(() => ({}));

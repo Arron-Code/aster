@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { isAdmin, unauthorized } from "@/lib/admin-api";
+import { authorize, guard } from "@/lib/admin-api";
 import { prisma } from "@/lib/prisma";
 
 const staffSchema = z.object({
@@ -20,15 +20,19 @@ function passwordHash(personnelNumber: string) {
 }
 
 export async function GET(req: NextRequest) {
-  if (!isAdmin(req)) return unauthorized();
-  return NextResponse.json(await prisma.staffMember.findMany({
+  const actor = await authorize(req);
+  if (actor instanceof NextResponse) return actor;
+  const staff = await prisma.staffMember.findMany({
     select: { id: true, name: true, email: true, personnelNumber: true, phone: true, role: true, department: true, active: true, createdAt: true },
     orderBy: { personnelNumber: "asc" },
-  }));
+  });
+  // The personnel number doubles as a login credential, so only admins may see it.
+  return NextResponse.json(actor.role === "admin" ? staff : staff.map((member) => ({ ...member, personnelNumber: "" })));
 }
 
 export async function POST(req: NextRequest) {
-  if (!isAdmin(req)) return unauthorized();
+  const denied = await guard(req);
+  if (denied) return denied;
   const payload = staffSchema.parse(await req.json());
   const staffMember = await prisma.staffMember.create({
     data: { ...payload, email: payload.email.toLowerCase(), phone: payload.phone || null, passwordHash: passwordHash(payload.personnelNumber) },
